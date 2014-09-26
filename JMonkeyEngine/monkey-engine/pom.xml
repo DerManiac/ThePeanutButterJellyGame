@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>maro.basic</groupId>
+	<artifactId>Game</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>Game</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jmonkey.version>3.0.0.20121220-SNAPSHOT</jmonkey.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>sonatype-public</id>
+			<name>sonatype public</name>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- The core library -->
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jME3-core</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+
+		<!-- LWJGL stuff -->
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jME3-lwjgl</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jME3-lwjgl-natives</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>lwjgl</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+
+		<!-- Bullet stuff -->
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jME3-jbullet</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jbullet</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+
+
+		<!-- Ogg audio stuff -->
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jME3-jogg</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>j-ogg-oggd</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>j-ogg-vorbisd</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+
+		<!-- Nifty GUI -->
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>jME3-niftygui</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>nifty</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>nifty-default-controls</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<!-- WARNING : Large - about 20M -->
+			<groupId>com.jme3</groupId>
+			<artifactId>nifty-examples</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jme3</groupId>
+			<artifactId>nifty-style-black</artifactId>
+			<version>${jmonkey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

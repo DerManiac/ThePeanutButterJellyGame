@@ -18,9 +18,7 @@ public class ItemGenerator implements IItemGenerator {
    * @see com.gamelabgraz.jam.tpbjg.items.IItemGenerator#generateRandomItem(com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame)
    */
   @Override
-  public void generateRandomItem(ThePeanutButterJellyGame game) {
-    Item item = new Item(ItemType.values()[Rnd.nextInt(ItemType.values().length)]);
-    
-    //FIXME add items to peanutbuttergameclass
+  public Item generateRandomItem(final int x, final int y,ThePeanutButterJellyGame game) {
+    return new Item(x, y, ItemType.values()[Rnd.nextInt(ItemType.values().length)]);
   }
 }

@@ -1,29 +1,60 @@
 package com.gamelabgraz.jam.tpbjg.items;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
+
+import at.chrl.nutils.Rnd;
+
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.implementation.CometAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.EarthAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.MagnetAction;
+import com.gamelabgraz.jam.tpbjg.items.implementation.RandomTrapAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
 
 /**
- * @author vinzynth
- * Sep 27, 2014 - 5:23:52 PM
+ * @author vinzynth Sep 27, 2014 - 5:23:52 PM
  *
  */
 public enum ItemType {
-  COMET(new CometAction()),
-  EARTH(new EarthAction()),
-  MAGNET(new MagnetAction()),
-  TRAP(new TrapAction());
-  
-  private IItemAction action;
+  COMET(false, new CometAction()),
+  EARTH(false, new EarthAction()),
+  MAGNET(false, new MagnetAction()),
 
-  private ItemType(IItemAction action) {
-    this.action = action;
+  // Trap trigger
+  TRAP(true, new TrapAction()),
+
+  // Multiple Trap
+  TRAPTRAP(false, new MultipleItemAction(5, new RandomTrapAction())),
+
+  // Traps
+  FREEZE(true, new TrapAction());
+
+  private boolean isTrapTrigger;
+  private IItemAction[] actions;
+
+  private ItemType(boolean isTrap, IItemAction... actions) {
+    this.isTrapTrigger = isTrap;
+    this.actions = actions;
   }
-  
-  public void process(ThePeanutButterJellyGame game){
-    action.process(game);
+
+  public void process(ThePeanutButterJellyGame game) {
+    for (IItemAction iItemAction : actions)
+      iItemAction.process(game);
+  }
+
+  public static Collection<ItemType> getNonTraps() {
+    return Arrays.stream(ItemType.values()).filter(it -> !it.isTrapTrigger).collect(Collectors.toList());
+  }
+
+  public static Collection<ItemType> getTraps() {
+    return Arrays.stream(ItemType.values()).filter(it -> it.isTrapTrigger).collect(Collectors.toList());
+  }
+
+  public static ItemType getRandomTrap() {
+    Collection<ItemType> traps = getTraps();
+    return traps.toArray(new ItemType[traps.size()])[Rnd.nextInt(traps.size())];
   }
 }

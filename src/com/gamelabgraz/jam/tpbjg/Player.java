@@ -30,10 +30,10 @@ public class Player {
     this.container = container;
     this.game = game;
 
-    up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 100);
-    down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 100);
-    left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 100);
-    right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 100);
+    up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
+    down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
+    left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
+    right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
     up.setAutoUpdate(false);
     down.setAutoUpdate(false);
     left.setAutoUpdate(false);
@@ -144,7 +144,13 @@ public class Player {
   }
 
   /**
-   * @param speed the speed to set
+   * <<<<<<< HEAD
+   * 
+   * @param speed
+   *          the speed to set =======
+   * @param speed
+   *          the speed to set >>>>>>> branch 'master' of
+   *          https://github.com/DerManiac/ThePeanutButterJellyGame.git
    */
   public void setSpeed(float speed) {
     this.speed = speed;
@@ -160,7 +166,7 @@ public class Player {
         return true;
     }
 
-    if (game.getMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY)
+    if (game.getGameMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY)
       return true;
 
     return false;

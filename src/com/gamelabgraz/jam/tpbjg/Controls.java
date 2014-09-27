@@ -36,8 +36,8 @@ public class Controls {
     // init backup directional keyboard controls even if gamepad is used
     if (player == 1) {
       upButton = 17; // W
-      leftButton = 31; // A
-      downButton = 30; // S
+      leftButton = 30; // A
+      downButton = 31; // S
       rightButton = 32; // D
     } else {
       upButton = 200; // arrow up

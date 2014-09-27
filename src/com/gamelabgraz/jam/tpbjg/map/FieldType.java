@@ -9,11 +9,13 @@ import org.newdawn.slick.SpriteSheet;
  *
  */
 public enum FieldType {
-  EMPTY("assets/graphics/ground.png", 64, 64, 0, 0), WALL("assets/graphics/walls.png", 64, 64, 9, 0);
+  EMPTY(" ", "assets/graphics/ground.png", 64, 64, 0, 0), WALL("W", "assets/graphics/walls.png", 64, 64, 9, 0);
 
   private Image background;
+  private String symbol;
 
-  private FieldType(String spritePath, int width, int height, int x, int y) {
+  private FieldType(String symbol, String spritePath, int width, int height, int x, int y) {
+    this.symbol = symbol;
     SpriteSheet backgroundsprites;
     try {
       backgroundsprites = new SpriteSheet(spritePath, width, height);
@@ -26,5 +28,9 @@ public enum FieldType {
 
   public Image getBackground() {
     return background;
+  }
+  
+  public String getSymbol(){
+    return symbol;
   }
 }

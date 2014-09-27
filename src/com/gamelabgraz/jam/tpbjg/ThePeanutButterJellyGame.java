@@ -14,6 +14,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics delta) throws SlickException {
+		
 	}
 
 	@Override

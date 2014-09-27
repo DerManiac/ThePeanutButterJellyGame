@@ -20,7 +20,7 @@ public enum FieldType {
     try {
       backgroundsprites = new SpriteSheet(spritePath, width, height);
       background = backgroundsprites.getSprite(x, y);
-    } catch (SlickException e) {
+    } catch (SlickException | RuntimeException e) {
       System.err.println("Error loading background sprite.");
       e.printStackTrace();
     }
@@ -29,8 +29,8 @@ public enum FieldType {
   public Image getBackground() {
     return background;
   }
-  
-  public String getSymbol(){
+
+  public String getSymbol() {
     return symbol;
   }
 }

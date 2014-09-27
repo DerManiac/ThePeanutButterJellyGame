@@ -34,7 +34,7 @@ public final class GameMap implements IGameMap {
     this.width = width;
     this.height = height;
     this.itemsAtStart = items;
-    this.itemsOnMap = new ArrayList<Item>();
+    this.itemsOnMap = new ArrayList<Item>(items);
     map = new FieldType[width][height];
     // init empty map
     this.foreachField((x, y, type) -> {

@@ -32,6 +32,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
+    gameMapRenderer.render();
     players.forEach(Player::render);
   }
 
@@ -53,7 +54,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     // Load sample map
     SampleGameMapFactory factory = new SampleGameMapFactory();
     IGameMap sample_map = factory.getGameMap(0);
-    gameMapRenderer = new GameMapRenderer(container.getGraphics(), sample_map);
+    gameMapRenderer = new GameMapRenderer(sample_map);
   }
 
   @Override

@@ -95,6 +95,8 @@ public class Player {
         else
           y_temp -= y_delta;
       }
+      if (isCollition(x, y_temp))
+        return;
     }
     y = y_temp;
     current = up;
@@ -112,6 +114,8 @@ public class Player {
         else
           y_temp += y_delta;
       }
+      if (isCollition(x, y_temp))
+        return;
     }
     y = y_temp;
     current = down;
@@ -122,13 +126,15 @@ public class Player {
     float x_delta = (delta * speed);
     float x_temp = x - x_delta;
     if (isCollition(x_temp, x)) {
-      while (x_temp > 0.1f) {
+      while (x_delta > 0.1f) {
         x_delta /= 2;
         if (isCollition(x_temp, y))
           x_temp += x_delta;
         else
           x_temp -= x_delta;
       }
+      if (isCollition(x_temp, y))
+        return;
     }
     x = x_temp;
     current = left;
@@ -137,15 +143,17 @@ public class Player {
 
   private void moveRight(final int delta) {
     float x_delta = (delta * speed);
-    float x_temp = x - x_delta;
+    float x_temp = x + x_delta;
     if (isCollition(x_temp, x)) {
-      while (x_temp > 0.1f) {
+      while (x_delta > 0.1f) {
         x_delta /= 2;
         if (isCollition(x_temp, y))
           x_temp -= x_delta;
         else
           x_temp += x_delta;
       }
+      if (isCollition(x_temp, y))
+        return;
     }
     x = x_temp;
     current = right;

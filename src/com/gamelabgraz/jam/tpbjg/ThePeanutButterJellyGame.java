@@ -9,12 +9,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import at.chrl.nutils.Rnd;
-
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
-import com.gamelabgraz.jam.tpbjg.map.FieldType;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
@@ -34,8 +31,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private static final int P1_START_X = 0;
   private static final int P1_START_Y = 0;
-  private static final int P2_START_X = 100;
-  private static final int P2_START_Y = 100;
+  private static final int P2_START_X = 500;
+  private static final int P2_START_Y = 500;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -76,25 +73,10 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
     itemSpawnTimer += delta;
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
-      ArrayList<int[]> empty_fields = new ArrayList<int[]>();
-      gameMap.foreachField((x, y, type) -> {
-        if (type == FieldType.EMPTY) {
-          boolean field_is_free = true;
-          for (Item current_item : itemsOnMap) {
-            if (current_item.getX() == x && current_item.getY() == y) {
-              field_is_free = false;
-            }
-          }
-          if (field_is_free) {
-            empty_fields.add(new int[] { x, y });
-          }
-        }
-      });
-
-      int spawn_index = Rnd.nextInt(empty_fields.size());
-      int[] spawn_location = empty_fields.get(spawn_index);
-      Item item_to_spawn = ItemGenerator.getInstance().generateRandomItem(spawn_location[0], spawn_location[1]);
-      itemsOnMap.add(item_to_spawn);
+      itemSpawnTimer = 0;
+      Item item_to_spawn = ItemGenerator.getInstance().generateRandomItem(this);
+      if (item_to_spawn != null)
+        itemsOnMap.add(item_to_spawn);
     }
   }
 
@@ -117,6 +99,14 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   public Collection<Player> getPlayers() {
     return players;
+  }
+
+  public IGameMap getGameMap() {
+    return gameMap;
+  }
+
+  public ArrayList<Item> getItemsOnMap() {
+    return itemsOnMap;
   }
 
   public static void main(String[] args) {

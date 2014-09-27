@@ -21,7 +21,7 @@ public class Item {
 
   public void processEffect(ThePeanutButterJellyGame game, Player player) {
     this.type.process(game, player);
-    game.getItemsOnMap().remove(this);
+    game.getGameMap().getItemsOnMap().remove(this);
   }
 
   /**

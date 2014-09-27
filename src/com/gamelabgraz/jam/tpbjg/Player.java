@@ -186,7 +186,7 @@ public class Player {
   private void checkPosition() {
     final int x_temp = (int) (x + (size / 2)) / size;
     final int y_temp = (int) (y + (size / 2)) / size;
-    ArrayList<Item> temp = new ArrayList<>(game.getItemsOnMap());
+    ArrayList<Item> temp = new ArrayList<>(game.getGameMap().getItemsOnMap());
 
     temp.forEach(i -> {
       if (i.getX() == x_temp && i.getY() == y_temp)

@@ -24,7 +24,7 @@ public class GameMapFactory implements IGameMapFactory {
   
   private void loadMaps(){
     try {
-      xmlProvider.provide(TPBJGConfig.LEVEL_FILE_DIRECTORY).forEach(g -> cachedMapsById.put(g.getMapId(), g));
+      xmlProvider.provide(TPBJGConfig.LEVEL_FILE_DIRECTORY).forEach(g -> {cachedMapsById.put(g.getMapId(), g);  System.out.println(g.getMapId());});
     } catch (IOException e) {
       e.printStackTrace();
     }

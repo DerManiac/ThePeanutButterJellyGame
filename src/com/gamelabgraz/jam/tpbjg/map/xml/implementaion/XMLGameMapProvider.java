@@ -49,12 +49,12 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
     Collection<File> filesToRead = new ArrayList<File>(1);
 
     if (!file.isDirectory()) {
-      if (!file.getAbsolutePath().endsWith("xml")) {
+      if (!file.getAbsolutePath().endsWith(TPBJGConfig.LEVEL_FILE_EXTENSION)) {
         throw new RuntimeException(file.getAbsolutePath() + " is not a XML file.");
       }
       filesToRead.add(file);
     } else
-      filesToRead = FileUtils.listFiles(file, new String[] { "xml" }, true);
+      filesToRead = FileUtils.listFiles(file, new String[] { TPBJGConfig.LEVEL_FILE_EXTENSION }, true);
 
     Collection<XMLGameMapDTO> dtos = new ArrayList<XMLGameMapDTO>();
     filesToRead.forEach(f -> {
@@ -66,7 +66,7 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
           Unmarshaller unmarshaller = context.createUnmarshaller();
           dtos.add((XMLGameMapDTO) unmarshaller.unmarshal(in));
         } catch (JAXBException e) {
-          throw new IOException(e.getMessage() + ": Error reading map from XML map file: " + f.getAbsolutePath(), e);
+          throw new IOException(e.getMessage() + ": Error reading map from " + TPBJGConfig.LEVEL_FILE_EXTENSION + " map file: " + f.getAbsolutePath(), e);
         }
       } catch (Exception e) {
         e.printStackTrace();

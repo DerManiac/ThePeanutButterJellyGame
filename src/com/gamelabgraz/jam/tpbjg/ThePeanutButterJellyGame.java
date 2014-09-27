@@ -9,6 +9,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import at.chrl.nutils.Rnd;
+
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
@@ -70,7 +72,10 @@ public class ThePeanutButterJellyGame extends BasicGame {
     itemSpawnTimer += delta;
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
       itemSpawnTimer = 0;
-      ItemGenerator.getInstance().generateRandomItem(this.gameMap);
+      if(Rnd.nextBoolean())
+        this.gameMap.getItemsOnMap().add(ItemGenerator.getInstance().generateRandomItem(this.gameMap));
+      else
+        this.gameMap.getItemsOnMap().add(ItemGenerator.getInstance().generateRandomStartItem(this.gameMap));
     }
   }
 

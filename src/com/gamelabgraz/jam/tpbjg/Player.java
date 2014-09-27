@@ -46,11 +46,11 @@ public class Player {
       final int gamepadNumber = controls.getGamepadNumber();
       if (input.isControllerUp(gamepadNumber))
         moveUp(delta);
-      else if (input.isControllerUp(gamepadNumber))
+      else if (input.isControllerDown(gamepadNumber))
         moveDown(delta);
-      else if (input.isControllerUp(gamepadNumber))
+      else if (input.isControllerLeft(gamepadNumber))
         moveLeft(delta);
-      else if (input.isControllerUp(gamepadNumber))
+      else if (input.isControllerRight(gamepadNumber))
         moveRight(delta);
       else
         moveStop();

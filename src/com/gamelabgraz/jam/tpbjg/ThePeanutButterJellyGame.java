@@ -15,7 +15,7 @@ import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
 
 public class ThePeanutButterJellyGame extends BasicGame {
 
-  private int gameSpeed = 100;
+  private int gameSpeed = 10;
 
   private ArrayList<Player> players = new ArrayList<Player>();
 

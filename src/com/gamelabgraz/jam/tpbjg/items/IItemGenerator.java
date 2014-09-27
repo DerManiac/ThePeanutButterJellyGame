@@ -16,4 +16,5 @@ public interface IItemGenerator {
 
   public Item generateRandomTrap(IGameMap game);
 
+  public Item generateRandomStartItem(IGameMap game);
 }

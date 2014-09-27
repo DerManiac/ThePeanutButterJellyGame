@@ -85,4 +85,20 @@ public class ItemGenerator implements IItemGenerator {
   public static ItemGenerator getInstance() {
     return SingletonHolder.instance;
   }
+
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.items.IItemGenerator#generateRandomStartItem(com.gamelabgraz.jam.tpbjg.map.IGameMap)
+   */
+  @Override
+  public Item generateRandomStartItem(IGameMap game) {
+    Item[] items = game.getStartItems().toArray(new Item[game.getStartItems().size()]);
+    for (int i = 0; i < items.length; i++) {
+      for (Item item : game.getItemsOnMap()) {
+        if(item.getX() != items[i].getX() && item.getY() != items[i].getY())
+          return new Item(item.getX(), item.getY(), item.getType());
+      }
+    }
+    return null;
+  }
 }

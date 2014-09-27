@@ -14,9 +14,10 @@ import at.chrl.nutils.Rnd;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.items.Item;
+import com.gamelabgraz.jam.tpbjg.items.ItemEffectHandler;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
-import com.gamelabgraz.jam.tpbjg.map.implementation.GameMapFactory;
+import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
 
 public class ThePeanutButterJellyGame extends BasicGame {
@@ -27,16 +28,18 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private GameMapRenderer gameMapRenderer;
   private IGameMap gameMap;
+  private ItemEffectHandler itemEffectHandler;
 
   private int itemSpawnTimer;
 
   private static final int P1_START_X = 0;
   private static final int P1_START_Y = 0;
-  private static final int P2_START_X = 480;
+  private static final int P2_START_X = 500;
   private static final int P2_START_Y = 500;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
+    this.itemEffectHandler = new ItemEffectHandler(this);
   }
 
   @Override
@@ -62,10 +65,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
     players.add(p2);
 
     // Load sample map
-    // SampleGameMapFactory factory = new SampleGameMapFactory();
-    gameMap = GameMapFactory.getInstance().getGameMap(0);
-    app.setDisplayMode(gameMap.getWidth() * GameMapRenderer.FIELD_WIDTH, gameMap.getHeight() * GameMapRenderer.FIELD_HEIGHT, false);
-
+    SampleGameMapFactory factory = new SampleGameMapFactory();
+    gameMap = factory.getGameMap(0);
     gameMapRenderer = new GameMapRenderer(gameMap);
   }
 
@@ -77,13 +78,12 @@ public class ThePeanutButterJellyGame extends BasicGame {
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
       itemSpawnTimer = 0;
       Item itemToAdd = null;
-      if (Rnd.nextBoolean())
+      if(Rnd.nextBoolean())
         itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
       else
         itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
-      if (Objects.nonNull(itemToAdd))
-        ;
-      this.gameMap.getItemsOnMap().add(itemToAdd);
+      if(Objects.nonNull(itemToAdd));
+        this.gameMap.getItemsOnMap().add(itemToAdd);
     }
   }
 
@@ -112,15 +112,20 @@ public class ThePeanutButterJellyGame extends BasicGame {
     return gameMap;
   }
 
-  private static AppGameContainer app;
-
   public static void main(String[] args) {
     try {
       ThePeanutButterJellyGame game = new ThePeanutButterJellyGame();
-      app = new AppGameContainer(game, 800, 600, false);
-      app.start();
+      AppGameContainer container = new AppGameContainer(game, 800, 600, false);
+      container.start();
     } catch (SlickException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * @return the itemEffectHandler
+   */
+  public ItemEffectHandler getItemEffectHandler() {
+    return itemEffectHandler;
   }
 }

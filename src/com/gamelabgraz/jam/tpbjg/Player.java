@@ -2,6 +2,8 @@ package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
 
+import java.util.Arrays;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -84,36 +86,77 @@ public class Player {
   }
 
   private void moveUp(final int delta) {
-    final float y_temp = y - (delta * speed);
-    if (isCollition(x, y_temp))
-      return;
+
+    float y_delta = (delta * speed);
+    float y_temp = y - y_delta;
+    if (isCollition(x, y_temp)) {
+      while (y_delta > 0.1f) {
+        y_delta /= 2;
+        if (isCollition(x, y_temp))
+          y_temp += y_delta;
+        else
+          y_temp -= y_delta;
+      }
+      if (isCollition(x, y_temp))
+        return;
+    }
     y = y_temp;
     current = up;
     current.update(delta);
   }
 
   private void moveDown(final int delta) {
-    final float y_temp = y + (delta * speed);
-    if (isCollition(x, y_temp))
-      return;
+    float y_delta = (delta * speed);
+    float y_temp = y + y_delta;
+    if (isCollition(x, y_temp)) {
+      while (y_delta > 0.1f) {
+        y_delta /= 2;
+        if (isCollition(x, y_temp))
+          y_temp -= y_delta;
+        else
+          y_temp += y_delta;
+      }
+      if (isCollition(x, y_temp))
+        return;
+    }
     y = y_temp;
     current = down;
     current.update(delta);
   }
 
   private void moveLeft(final int delta) {
-    final float x_temp = x - (delta * speed);
-    if (isCollition(x_temp, y))
-      return;
+    float x_delta = (delta * speed);
+    float x_temp = x - x_delta;
+    if (isCollition(x_temp, x)) {
+      while (x_delta > 0.1f) {
+        x_delta /= 2;
+        if (isCollition(x_temp, y))
+          x_temp += x_delta;
+        else
+          x_temp -= x_delta;
+      }
+      if (isCollition(x_temp, y))
+        return;
+    }
     x = x_temp;
     current = left;
     current.update(delta);
   }
 
   private void moveRight(final int delta) {
-    final float x_temp = x + (delta * speed);
-    if (isCollition(x_temp, y))
-      return;
+    float x_delta = (delta * speed);
+    float x_temp = x + x_delta;
+    if (isCollition(x_temp, x)) {
+      while (x_delta > 0.1f) {
+        x_delta /= 2;
+        if (isCollition(x_temp, y))
+          x_temp -= x_delta;
+        else
+          x_temp += x_delta;
+      }
+      if (isCollition(x_temp, y))
+        return;
+    }
     x = x_temp;
     current = right;
     current.update(delta);
@@ -155,13 +198,8 @@ public class Player {
   }
 
   /**
-   * <<<<<<< HEAD
-   * 
    * @param speed
-   *          the speed to set =======
-   * @param speed
-   *          the speed to set >>>>>>> branch 'master' of
-   *          https://github.com/DerManiac/ThePeanutButterJellyGame.git
+   *          the speed to set
    */
   public void setSpeed(float speed) {
     this.speed = speed;
@@ -191,6 +229,8 @@ public class Player {
     temp.forEach(i -> {
       if (i.getX() == x_temp && i.getY() == y_temp)
         i.processEffect(game, this);
+      Arrays.stream(i.getType().getItemActions()).forEach(
+          ii -> game.getItemEffectHandler().registerEffect(ii, this, i.getType().getDuration()));
     });
 
   }

@@ -22,25 +22,27 @@ import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
  *
  */
 public enum ItemType {
-  COMET(false, "assets/graphics/baseflag.png", 64, 64, 0, 0, new CometAction()), //
-  EARTH(false, "assets/graphics/baseflag.png", 64, 64, 1, 0, new EarthAction()), //
-  MAGNET(false, "assets/graphics/baseflag.png", 64, 64, 2, 0, new MagnetAction()), //
+  COMET(false, "assets/graphics/baseflag.png", 64, 64, 0, 0, 5000, new CometAction()), //
+  EARTH(false, "assets/graphics/baseflag.png", 64, 64, 1, 0, 5000, new EarthAction()), //
+  MAGNET(false, "assets/graphics/baseflag.png", 64, 64, 2, 0, 0, new MagnetAction()), //
 
   // Trap trigger
-  TRAP(true, "assets/graphics/baseflag.png", 64, 64, 3, 0, new TrapAction()),
+  TRAP(true, "assets/graphics/baseflag.png", 64, 64, 3, 0, 0, new TrapAction()),
 
   // Multiple Trap
-  TRAPTRAP(false, "assets/graphics/baseflag.png", 64, 64, 3, 0, new MultipleItemAction(5, new TrapAction())),
+  TRAPTRAP(false, "assets/graphics/baseflag.png", 64, 64, 3, 0, 0, new MultipleItemAction(5, new TrapAction())),
 
   // Traps
-  FREEZE(true, "assets/graphics/baseflag.png", 64, 64, 3, 0, new TrapAction());
+  FREEZE(true, "assets/graphics/baseflag.png", 64, 64, 3, 0, 5000, new TrapAction());
 
   private boolean isTrapTrigger;
   private IItemAction[] actions;
   private Image image;
+  private int duration;
 
-  private ItemType(boolean isTrap, String spritePath, int width, int height, int x, int y, IItemAction... actions) {
+  private ItemType(boolean isTrap, String spritePath, int width, int height, int x, int y, int duration, IItemAction... actions) {
     this.isTrapTrigger = isTrap;
+    this.duration = duration;
     this.actions = actions;
 
     try {
@@ -53,6 +55,17 @@ public enum ItemType {
 
   public Image getImage() {
     return image;
+  }
+
+  public IItemAction[] getItemActions() {
+    return actions;
+  }
+
+  /**
+   * @return the duration
+   */
+  public int getDuration() {
+    return duration;
   }
 
   public void process(ThePeanutButterJellyGame game, Player player) {

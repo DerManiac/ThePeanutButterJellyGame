@@ -45,7 +45,7 @@ public enum ItemType {
 
     try {
       image = new SpriteSheet(spritePath, width, height).getSprite(x, y);
-    } catch (SlickException e) {
+    } catch (SlickException | RuntimeException e) {
       System.err.println("Error loading background sprite.");
       e.printStackTrace();
     }

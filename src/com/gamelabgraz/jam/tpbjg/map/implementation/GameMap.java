@@ -15,14 +15,22 @@ import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 public final class GameMap implements IGameMap {
 
   final FieldType[][] map;
+  private int width;
+  private int height;
+  private int id;
 
   /**
    * game Map constructor
    */
   public GameMap(final int id, final int width, final int height) {
+    this.id = id;
+    this.width = width;
+    this.height = height;
     map = new FieldType[width][height];
     // init empty map
-    //foreachField((x, y) -> {map[x][y] = Fi});
+    this.foreachField((x, y, type) -> {
+      map[x][y] = FieldType.EMPTY;
+    });
   }
 
   /**
@@ -32,8 +40,7 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public FieldType getField(int x, int y) {
-    // TODO Auto-generated method stub
-    return null;
+    return map[x][y];
   }
 
   /**
@@ -43,8 +50,7 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public int getHeight() {
-    // TODO Auto-generated method stub
-    return 0;
+    return height;
   }
 
   /**
@@ -54,8 +60,7 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public int getWidth() {
-    // TODO Auto-generated method stub
-    return 0;
+     return width;
   }
 
   /**
@@ -66,8 +71,7 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public void setField(int x, int y, FieldType type) {
-    // TODO Auto-generated method stub
-
+     map[x][y] = type;
   }
 
   /**
@@ -77,21 +81,20 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public int getMapId() {
-    // TODO Auto-generated method stub
-    return 0;
+    return id;
   }
 
   /**
    * {@inheritDoc}
+   * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#foreachField(com.gamelabgraz.jam.tpbjg.map.IFieldProcessor)
    */
   @Override
   public void foreachField(IFieldProcessor proc) {
     IntStream.range(0, getHeight()).forEach(y -> {
       IntStream.range(0, getWidth()).forEach(x -> {
-        proc.process(x, y);
+        proc.process(x, y, getField(x, y));
       });
     });
   }
-
 }

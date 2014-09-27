@@ -7,5 +7,5 @@ package com.gamelabgraz.jam.tpbjg.map;
  *
  */
 public interface IFieldProcessor {
-  void process(final int x, final int y);
+  void process(final int x, final int y, final FieldType type);
 }

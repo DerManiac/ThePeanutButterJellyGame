@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
 import at.chrl.nutils.Rnd;
 
 import com.gamelabgraz.jam.tpbjg.Player;
@@ -18,25 +22,37 @@ import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
  *
  */
 public enum ItemType {
-  COMET(false, new CometAction()),
-  EARTH(false, new EarthAction()),
-  MAGNET(false, new MagnetAction()),
+  COMET(false, "assets/graphics/baseflag.png", 64, 64, 0, 0, new CometAction()), //
+  EARTH(false, "assets/graphics/baseflag.png", 64, 64, 1, 0, new EarthAction()), //
+  MAGNET(false, "assets/graphics/baseflag.png", 64, 64, 2, 0, new MagnetAction()), //
 
   // Trap trigger
-  TRAP(true, new TrapAction()),
+  TRAP(true, "assets/graphics/baseflag.png", 64, 64, 3, 0, new TrapAction()),
 
   // Multiple Trap
-  TRAPTRAP(false, new MultipleItemAction(5, new TrapAction())),
+  TRAPTRAP(false, "assets/graphics/baseflag.png", 64, 64, 3, 0, new MultipleItemAction(5, new TrapAction())),
 
   // Traps
-  FREEZE(true, new TrapAction());
+  FREEZE(true, "assets/graphics/baseflag.png", 64, 64, 3, 0, new TrapAction());
 
   private boolean isTrapTrigger;
   private IItemAction[] actions;
+  private Image image;
 
-  private ItemType(boolean isTrap, IItemAction... actions) {
+  private ItemType(boolean isTrap, String spritePath, int width, int height, int x, int y, IItemAction... actions) {
     this.isTrapTrigger = isTrap;
     this.actions = actions;
+
+    try {
+      image = new SpriteSheet(spritePath, width, height).getSprite(x, y);
+    } catch (SlickException e) {
+      System.err.println("Error loading background sprite.");
+      e.printStackTrace();
+    }
+  }
+
+  public Image getImage() {
+    return image;
   }
 
   public void process(ThePeanutButterJellyGame game, Player player) {

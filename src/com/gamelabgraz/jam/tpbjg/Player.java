@@ -1,11 +1,14 @@
 package com.gamelabgraz.jam.tpbjg;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.map.FieldType;
 
 public class Player {
@@ -30,10 +33,17 @@ public class Player {
     this.container = container;
     this.game = game;
 
-    up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
-    down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
-    left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
-    right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
+    if (player == 1) {
+      up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
+      down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
+      left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
+      right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
+    } else {
+      up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
+      down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
+      left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
+      right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
+    }
     up.setAutoUpdate(false);
     down.setAutoUpdate(false);
     left.setAutoUpdate(false);
@@ -70,6 +80,7 @@ public class Player {
         moveStop();
     }
 
+    checkPosition();
   }
 
   private void moveUp(final int delta) {
@@ -170,5 +181,17 @@ public class Player {
       return true;
 
     return false;
+  }
+
+  private void checkPosition() {
+    final int x_temp = (int) (x + (size / 2)) / size;
+    final int y_temp = (int) (y + (size / 2)) / size;
+    ArrayList<Item> temp = new ArrayList<>(game.getGameMap().getItemsOnMap());
+
+    temp.forEach(i -> {
+      if (i.getX() == x_temp && i.getY() == y_temp)
+        i.processEffect(game, this);
+    });
+
   }
 }

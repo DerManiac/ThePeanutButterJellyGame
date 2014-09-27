@@ -15,13 +15,13 @@ public class Controls {
 
   public Controls(int player) {
     // initializing default controls
-    this(player, true);
+    this(player, false);
   }
 
   public Controls(int player, boolean useGamepad) {
     // initializing default controls
     if (useGamepad) {
-      useGamepad = true;
+      this.useGamepad = useGamepad;
       actionButton = 1;
     } else {
       if (player == 1) {

@@ -9,5 +9,5 @@ import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
  */
 public interface IItemGenerator {
 
-  public void generateRandomItem(ThePeanutButterJellyGame game);
+  public Item generateRandomItem(final int x, final int y, final ThePeanutButterJellyGame game);
 }

@@ -63,12 +63,8 @@ public class XMLGameMapDTO {
   public XMLGameMapDTO(final IGameMap map) {
     // Build up fields
     this.fields = new ArrayList<XMLFieldDTO>(map.getHeight() * map.getWidth());
-    IntStream.range(0, map.getHeight()).forEach(y -> {
-      IntStream.range(0, getWidth()).forEach(x -> {
-        this.fields.add(new XMLFieldDTO(x, y, map.getField(x, y)));
-      });
-    });
-
+    map.foreachField((x, y, type) -> this.fields.add(new XMLFieldDTO(x, y, type)));
+    
     // set width
     this.width = map.getWidth();
 

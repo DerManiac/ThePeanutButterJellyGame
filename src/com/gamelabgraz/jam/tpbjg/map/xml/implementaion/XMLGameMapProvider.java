@@ -42,7 +42,7 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
    * @see com.gamelabgraz.jam.tpbjg.map.xml.IXMLGameMapProvider#provide(java.io.File)
    */
   @Override
-  public Iterable<IGameMap> provide(final File file) throws FileNotFoundException, IOException {
+  public Collection<IGameMap> provide(final File file) throws FileNotFoundException, IOException {
     if (!file.exists())
       throw new FileNotFoundException(file.getAbsolutePath() + " does not exist.");
 

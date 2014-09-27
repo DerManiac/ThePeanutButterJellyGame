@@ -2,6 +2,7 @@ package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -9,10 +10,13 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
+import com.gamelabgraz.jam.tpbjg.items.Item;
+import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
+import com.gamelabgraz.jam.tpbjg.map.FieldType;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
-
 
 public class ThePeanutButterJellyGame extends BasicGame {
 
@@ -21,6 +25,16 @@ public class ThePeanutButterJellyGame extends BasicGame {
   private ArrayList<Player> players = new ArrayList<Player>();
 
   private GameMapRenderer gameMapRenderer;
+  private IGameMap gameMap;
+
+  private ArrayList<Item> itemsOnMap;
+
+  private int itemSpawnTimer;
+
+  private static final int P1_START_X = 0;
+  private static final int P1_START_Y = 0;
+  private static final int P2_START_X = 100;
+  private static final int P2_START_Y = 100;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -28,6 +42,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
+    gameMapRenderer.render();
     players.forEach(Player::render);
   }
 
@@ -36,19 +51,50 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMaximumLogicUpdateInterval(gameSpeed);
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
-    players.add(new Player(container, this, 1, false));
-    // players.add(new Player(container, this, 2, false));
-    // players.get(1).setX(65);
-    
+
+    Player p1 = new Player(container, this, 1, false);
+    Player p2 = new Player(container, this, 2, false);
+    p1.setX(P1_START_X);
+    p1.setY(P1_START_Y);
+    p2.setX(P2_START_X);
+    p2.setY(P2_START_Y);
+    players.add(p1);
+    players.add(p2);
+
     // Load sample map
     SampleGameMapFactory factory = new SampleGameMapFactory();
-    IGameMap sample_map = factory.getGameMap(0);
-    gameMapRenderer = new GameMapRenderer(container.getGraphics(), sample_map);
+    gameMap = factory.getGameMap(0);
+    gameMapRenderer = new GameMapRenderer(container.getGraphics(), gameMap);
+
+    itemsOnMap = new ArrayList<Item>();
   }
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
     players.forEach(p -> p.move(delta));
+
+    itemSpawnTimer += delta;
+    if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
+      ArrayList<Integer[]> empty_fields = new ArrayList<Integer[]>();
+      gameMap.foreachField((x, y, type) -> {
+        if (type == FieldType.EMPTY) {
+          boolean field_is_free = true;
+          for (Item current_item : itemsOnMap) {
+            if (current_item.getX() == x && current_item.getY() == y) {
+              field_is_free = false;
+            }
+          }
+          if (field_is_free) {
+            empty_fields.add(new Integer[] { x, y });
+          }
+        }
+      });
+
+      Random rand = new Random();
+
+      Item item_to_spawn = ItemGenerator.getInstance().generateRandomItem();
+    }
+
   }
 
   public void controllerButtonPressed(int controller, int button) {
@@ -59,6 +105,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
             if (pr.getControls().getGamepadNumber() == controller)
               return;
           p.getControls().setUseGamepad(true);
+          System.out.println();
           p.getControls().setGamepadNumber(controller);
           System.out.println("Player " + players.indexOf(p) + " registered as gamepad " + controller);
           break;

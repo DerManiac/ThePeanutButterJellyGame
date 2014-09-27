@@ -96,4 +96,9 @@ public class Player {
   public void render() {
     current.draw(x, y);
   }
+
+  public Controls getControls() {
+    return controls;
+  }
+
 }

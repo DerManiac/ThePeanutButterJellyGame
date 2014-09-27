@@ -34,7 +34,21 @@ public class ThePeanutButterJellyGame extends BasicGame {
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
     player1.move(delta);
-    player1.move(delta);
+    player2.move(delta);
+  }
+
+  public void controllerButtonPressed(int controller, int button) {
+    if (button == Controls.GAMEPAD_START) {
+      if (!player1.getControls().isUseGamepad()) {
+        player1.getControls().setUseGamepad(true);
+        player1.getControls().setGamepadNumber(controller);
+        System.out.println("Player 1 registered as gamepad " + controller);
+      } else if (!player2.getControls().isUseGamepad()) {
+        player2.getControls().setUseGamepad(true);
+        player2.getControls().setGamepadNumber(controller);
+        System.out.println("Player 2 registered as gamepad " + controller);
+      }
+    }
   }
 
   public static void main(String[] args) {

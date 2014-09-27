@@ -4,6 +4,7 @@ import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.implementation.CometAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.EarthAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.MagnetAction;
+import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
 
 /**
  * @author vinzynth
@@ -13,7 +14,8 @@ import com.gamelabgraz.jam.tpbjg.items.implementation.MagnetAction;
 public enum ItemType {
   COMET(new CometAction()),
   EARTH(new EarthAction()),
-  MAGNET(new MagnetAction());
+  MAGNET(new MagnetAction()),
+  TRAP(new TrapAction());
   
   private IItemAction action;
 

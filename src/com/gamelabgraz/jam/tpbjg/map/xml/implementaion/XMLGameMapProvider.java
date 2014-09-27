@@ -79,7 +79,13 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
       }
     });
 
-    return dtos.stream().map(dto -> new GameMap(dto.getId(), dto.getWidth(), dto.getHeight())).collect(Collectors.toList());
+    return dtos.stream()
+        .map(dto -> {
+          IGameMap m = new GameMap(dto.getId(), dto.getWidth(), dto.getHeight());
+          dto.getFields().forEach(f -> m.setField(f.getX(), f.getY(), f.getFieldType()));
+          return m;
+        })
+        .collect(Collectors.toList());
   }
 
   /**

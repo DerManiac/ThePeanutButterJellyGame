@@ -13,6 +13,7 @@ import com.gamelabgraz.jam.tpbjg.map.implementation.GameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.xml.IXMLGameMapProvider;
 import com.gamelabgraz.jam.tpbjg.map.xml.implementaion.XMLGameMapProvider;
+import com.gamelabgraz.jam.tpbjg.util.GameMapUtils;
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;;
 
 /**
@@ -50,5 +51,12 @@ public class MapIOTest {
   public void testLoad() throws Exception {
     IGameMapFactory igmf = GameMapFactory.getInstance();
     IntStream.range(0, 20).forEach(igmf::getGameMap);
+  }
+  
+  
+  @Test
+  public void testMapPrint() throws Exception {
+    IGameMapFactory igmf = GameMapFactory.getInstance();
+    GameMapUtils.printMap(igmf.getGameMap(0));
   }
 }

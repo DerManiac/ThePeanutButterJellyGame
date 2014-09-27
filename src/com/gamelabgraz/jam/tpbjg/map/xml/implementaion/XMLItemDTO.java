@@ -3,51 +3,50 @@ package com.gamelabgraz.jam.tpbjg.map.xml.implementaion;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-import com.gamelabgraz.jam.tpbjg.map.FieldType;
+import com.gamelabgraz.jam.tpbjg.items.ItemType;
 
 /**
- * @author vinzynth Sep 27, 2014 - 12:35:47 PM
+ * @author vinzynth
+ * Sep 27, 2014 - 7:58:52 PM
  *
  */
-@XmlType(name = "field")
-public class XMLFieldDTO {
-
+@XmlType(name = "item")
+public class XMLItemDTO {
   /**
    * x coordinate
    */
   @XmlAttribute(name = "x")
   private int x;
-
+  
   /**
    * y coordinate
    */
   @XmlAttribute(name = "y")
   private int y;
-
+  
   /**
    * field type
    */
   @XmlAttribute(name = "type")
-  private FieldType fieldType;
-
+  private ItemType itemtype;
+  
   /**
    * default constructor for JAXB
    */
-  protected XMLFieldDTO() {
-  }
-
+  protected XMLItemDTO(){}
+  
   /**
    * XMLFieldDTO constructor
-   * 
    * @param x
    * @param y
    * @param fieldType
    */
-  public XMLFieldDTO(final int x, final int y, final FieldType fieldType) {
+  public XMLItemDTO(final int x, final int y, final ItemType itemtype){
     this.x = x;
     this.y = y;
-    this.fieldType = fieldType;
+    this.itemtype = itemtype;
   }
+
 
   /**
    * @return the x
@@ -56,6 +55,7 @@ public class XMLFieldDTO {
     return x;
   }
 
+
   /**
    * @return the y
    */
@@ -63,11 +63,12 @@ public class XMLFieldDTO {
     return y;
   }
 
-  /**
-   * @return the fieldType
-   */
-  public FieldType getFieldType() {
-    return fieldType;
-  }
 
+  /**
+   * @return the itemType
+   */
+  public ItemType getItemType() {
+    return itemtype;
+  }
+  
 }

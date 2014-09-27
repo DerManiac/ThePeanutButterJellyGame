@@ -2,6 +2,7 @@ package com.gamelabgraz.jam.tpbjg.map.xml.implementaion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -48,6 +49,13 @@ public class XMLGameMapDTO {
   private List<XMLFieldDTO> fields;
 
   /**
+   * map items
+   */
+  @XmlElementWrapper(name = "items")
+  @XmlElement(name = "item")
+  private List<XMLItemDTO> items;
+
+  /**
    * protected default constructor for JAXB
    */
   protected XMLGameMapDTO() {
@@ -63,7 +71,9 @@ public class XMLGameMapDTO {
     // Build up fields
     this.fields = new ArrayList<XMLFieldDTO>(map.getHeight() * map.getWidth());
     map.foreachField((x, y, type) -> this.fields.add(new XMLFieldDTO(x, y, type)));
-    
+
+    this.items = map.getStartItems().stream().map(i -> new XMLItemDTO(i.getX(), i.getY(), i.getType())).collect(Collectors.toList());
+
     // set width
     this.width = map.getWidth();
 
@@ -93,6 +103,13 @@ public class XMLGameMapDTO {
    */
   public List<XMLFieldDTO> getFields() {
     return fields;
+  }
+
+  /**
+   * @return the items
+   */
+  public List<XMLItemDTO> getItems() {
+    return items;
   }
 
   /**

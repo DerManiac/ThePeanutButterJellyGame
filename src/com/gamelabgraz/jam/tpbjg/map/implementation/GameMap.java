@@ -1,8 +1,11 @@
 package com.gamelabgraz.jam.tpbjg.map.implementation;
 
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.stream.IntStream;
 
+import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.map.FieldType;
 import com.gamelabgraz.jam.tpbjg.map.IFieldProcessor;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
@@ -14,7 +17,9 @@ import com.gamelabgraz.jam.tpbjg.map.IGameMap;
  *
  */
 public final class GameMap implements IGameMap {
-
+  
+  final Collection<Item> itemsOnMap;
+  Collection<Item> itemsAtStart;
   final BitSet revealed;
   final FieldType[][] map;
   private int width;
@@ -24,10 +29,12 @@ public final class GameMap implements IGameMap {
   /**
    * game Map constructor
    */
-  public GameMap(final int id, final int width, final int height) {
+  public GameMap(final int id, final int width, final int height, final Collection<Item> items) {
     this.id = id;
     this.width = width;
     this.height = height;
+    this.itemsAtStart = items;
+    this.itemsOnMap = new ArrayList<Item>();
     map = new FieldType[width][height];
     // init empty map
     this.foreachField((x, y, type) -> {
@@ -126,5 +133,31 @@ public final class GameMap implements IGameMap {
   @Override
   public void unrevealMap() {
     this.revealed.clear();
+  }
+
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#getStartItems()
+   */
+  @Override
+  public Collection<Item> getStartItems() {
+    return itemsAtStart;
+  }
+
+  /**
+   * package private for {@link SampleGameMapFactory}
+   * @param startItems
+   */
+  void setStartItems(Collection<Item> startItems){
+    this.itemsAtStart = startItems;
+  }
+  
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#getItemsOnMap()
+   */
+  @Override
+  public Collection<Item> getItemsOnMap() {
+    return itemsOnMap;
   }
 }

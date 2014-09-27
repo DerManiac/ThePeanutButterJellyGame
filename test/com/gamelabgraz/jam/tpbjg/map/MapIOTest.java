@@ -1,7 +1,5 @@
 package com.gamelabgraz.jam.tpbjg.map;
 
-import static org.junit.Assert.*;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,12 +7,12 @@ import java.util.stream.IntStream;
 
 import org.junit.Test;
 
+import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.map.implementation.GameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.xml.IXMLGameMapProvider;
 import com.gamelabgraz.jam.tpbjg.map.xml.implementaion.XMLGameMapProvider;
 import com.gamelabgraz.jam.tpbjg.util.GameMapUtils;
-import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;;
 
 /**
  * @author vinzynth

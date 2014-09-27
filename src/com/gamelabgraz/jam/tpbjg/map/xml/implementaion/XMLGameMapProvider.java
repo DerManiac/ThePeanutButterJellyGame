@@ -19,6 +19,7 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.io.FileUtils;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
+import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.GameMap;
 import com.gamelabgraz.jam.tpbjg.map.xml.IXMLGameMapProvider;
@@ -66,11 +67,12 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
           Unmarshaller unmarshaller = context.createUnmarshaller();
           dtos.add((XMLGameMapDTO) unmarshaller.unmarshal(in));
         } catch (JAXBException e) {
-          throw new IOException(e.getMessage() + ": Error reading map from " + TPBJGConfig.LEVEL_FILE_EXTENSION + " map file: " + f.getAbsolutePath(), e);
+          throw new IOException(e.getMessage() + ": Error reading map from " + TPBJGConfig.LEVEL_FILE_EXTENSION + " map file: "
+              + f.getAbsolutePath(), e);
         }
       } catch (Exception e) {
         e.printStackTrace();
-      } finally{
+      } finally {
         try {
           in.close();
         } catch (Exception e) {
@@ -79,13 +81,21 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
       }
     });
 
-    return dtos.stream()
-        .map(dto -> {
-          IGameMap m = new GameMap(dto.getId(), dto.getWidth(), dto.getHeight());
-          dto.getFields().forEach(f -> m.setField(f.getX(), f.getY(), f.getFieldType()));
-          return m;
-        })
-        .collect(Collectors.toList());
+    return dtos
+        .stream()
+        .map(
+            dto -> {
+              IGameMap m = new GameMap(
+                  dto.getId(),
+                  dto.getWidth(),
+                  dto.getHeight(),
+                  dto.getItems().stream()
+                  .map(dtoi -> new Item(dtoi.getX(), dtoi.getY(), dtoi.getItemType()))
+                  .collect(Collectors.<Item>toList())
+                  );
+              dto.getFields().forEach(f -> m.setField(f.getX(), f.getY(), f.getFieldType()));
+              return m;
+            }).collect(Collectors.toList());
   }
 
   /**

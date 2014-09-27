@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import at.chrl.nutils.Rnd;
 
-import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.IItemGenerator;
 import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.items.ItemType;
 import com.gamelabgraz.jam.tpbjg.map.FieldType;
+import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 
 /**
  * @author vinzynth Sep 27, 2014 - 5:41:03 PM
@@ -37,7 +37,7 @@ public class ItemGenerator implements IItemGenerator {
   }
 
   @Override
-  public Item generateRandomTrap(ThePeanutButterJellyGame game) {
+  public Item generateRandomTrap(IGameMap game) {
     int[] coordinates = findRandomEmptyCoordinates(game);
     if (coordinates != null) {
       return generateRandomTrap(coordinates[0], coordinates[1]);
@@ -46,7 +46,7 @@ public class ItemGenerator implements IItemGenerator {
   }
 
   @Override
-  public Item generateRandomItem(ThePeanutButterJellyGame game) {
+  public Item generateRandomItem(IGameMap game) {
     int[] coordinates = findRandomEmptyCoordinates(game);
     if (coordinates != null) {
       return generateRandomItem(coordinates[0], coordinates[1]);
@@ -54,9 +54,9 @@ public class ItemGenerator implements IItemGenerator {
     return null;
   }
 
-  private int[] findRandomEmptyCoordinates(ThePeanutButterJellyGame game) {
+  private int[] findRandomEmptyCoordinates(IGameMap game) {
     ArrayList<int[]> empty_fields = new ArrayList<int[]>();
-    game.getGameMap().foreachField((x, y, type) -> {
+    game.foreachField((x, y, type) -> {
       if (type == FieldType.EMPTY) {
         boolean field_is_free = true;
         for (Item current_item : game.getItemsOnMap()) {

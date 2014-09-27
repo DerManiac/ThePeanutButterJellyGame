@@ -2,6 +2,7 @@ package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -12,9 +13,10 @@ import org.newdawn.slick.SlickException;
 import at.chrl.nutils.Rnd;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
+import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
-import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
+import com.gamelabgraz.jam.tpbjg.map.implementation.GameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
 
 public class ThePeanutButterJellyGame extends BasicGame {
@@ -30,7 +32,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private static final int P1_START_X = 0;
   private static final int P1_START_Y = 0;
-  private static final int P2_START_X = 500;
+  private static final int P2_START_X = 480;
   private static final int P2_START_Y = 500;
 
   public ThePeanutButterJellyGame() {
@@ -60,8 +62,10 @@ public class ThePeanutButterJellyGame extends BasicGame {
     players.add(p2);
 
     // Load sample map
-    SampleGameMapFactory factory = new SampleGameMapFactory();
-    gameMap = factory.getGameMap(0);
+    // SampleGameMapFactory factory = new SampleGameMapFactory();
+    gameMap = GameMapFactory.getInstance().getGameMap(0);
+    app.setDisplayMode(gameMap.getWidth() * GameMapRenderer.FIELD_WIDTH, gameMap.getHeight() * GameMapRenderer.FIELD_HEIGHT, false);
+
     gameMapRenderer = new GameMapRenderer(gameMap);
   }
 
@@ -72,10 +76,14 @@ public class ThePeanutButterJellyGame extends BasicGame {
     itemSpawnTimer += delta;
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
       itemSpawnTimer = 0;
-      if(Rnd.nextBoolean())
-        this.gameMap.getItemsOnMap().add(ItemGenerator.getInstance().generateRandomItem(this.gameMap));
+      Item itemToAdd = null;
+      if (Rnd.nextBoolean())
+        itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
       else
-        this.gameMap.getItemsOnMap().add(ItemGenerator.getInstance().generateRandomStartItem(this.gameMap));
+        itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
+      if (Objects.nonNull(itemToAdd))
+        ;
+      this.gameMap.getItemsOnMap().add(itemToAdd);
     }
   }
 
@@ -104,11 +112,13 @@ public class ThePeanutButterJellyGame extends BasicGame {
     return gameMap;
   }
 
+  private static AppGameContainer app;
+
   public static void main(String[] args) {
     try {
       ThePeanutButterJellyGame game = new ThePeanutButterJellyGame();
-      AppGameContainer container = new AppGameContainer(game, 800, 600, false);
-      container.start();
+      app = new AppGameContainer(game, 800, 600, false);
+      app.start();
     } catch (SlickException e) {
       e.printStackTrace();
     }

@@ -29,8 +29,9 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMaximumLogicUpdateInterval(gameSpeed);
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
-    players.add(new Player(container, 1, false));
-    players.add(new Player(container, 2, false));
+    players.add(new Player(container, this, 1, false));
+    // players.add(new Player(container, this, 2, false));
+    // players.get(1).setX(65);
   }
 
   @Override
@@ -42,6 +43,9 @@ public class ThePeanutButterJellyGame extends BasicGame {
     if (button == Controls.GAMEPAD_START) {
       for (Player p : players) {
         if (!p.getControls().isUseGamepad()) {
+          for (Player pr : players)
+            if (pr.getControls().getGamepadNumber() == controller)
+              return;
           p.getControls().setUseGamepad(true);
           p.getControls().setGamepadNumber(controller);
           System.out.println("Player " + players.indexOf(p) + " registered as gamepad " + controller);

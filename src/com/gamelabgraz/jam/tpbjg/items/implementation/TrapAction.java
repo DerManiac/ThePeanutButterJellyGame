@@ -16,7 +16,7 @@ public class TrapAction implements IItemAction {
    */
   @Override
   public void process(ThePeanutButterJellyGame game) {
-    // spawn trap
+    
   }
 
 }

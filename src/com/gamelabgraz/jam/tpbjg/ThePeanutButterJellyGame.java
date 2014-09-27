@@ -72,6 +72,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
+    itemEffectHandler.processDelta(delta);
     players.forEach(p -> p.move(delta));
 
     itemSpawnTimer += delta;

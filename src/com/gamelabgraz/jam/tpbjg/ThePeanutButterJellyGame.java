@@ -1,5 +1,8 @@
 package com.gamelabgraz.jam.tpbjg;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -10,7 +13,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int gameSpeed = 100;
 
-  private Player player1, player2;
+  private ArrayList<Player> players = new ArrayList<Player>();
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -18,8 +21,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
-    player1.render();
-    player2.render();
+    players.forEach(Player::render);
   }
 
   @Override
@@ -27,28 +29,30 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMaximumLogicUpdateInterval(gameSpeed);
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
-    player1 = new Player(container, 1, false);
-    player2 = new Player(container, 2, false);
+    players.add(new Player(container, 1, false));
+    players.add(new Player(container, 2, false));
   }
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
-    player1.move(delta);
-    player2.move(delta);
+    players.forEach(p -> p.move(delta));
   }
 
   public void controllerButtonPressed(int controller, int button) {
     if (button == Controls.GAMEPAD_START) {
-      if (!player1.getControls().isUseGamepad()) {
-        player1.getControls().setUseGamepad(true);
-        player1.getControls().setGamepadNumber(controller);
-        System.out.println("Player 1 registered as gamepad " + controller);
-      } else if (!player2.getControls().isUseGamepad()) {
-        player2.getControls().setUseGamepad(true);
-        player2.getControls().setGamepadNumber(controller);
-        System.out.println("Player 2 registered as gamepad " + controller);
+      for (Player p : players) {
+        if (!p.getControls().isUseGamepad()) {
+          p.getControls().setUseGamepad(true);
+          p.getControls().setGamepadNumber(controller);
+          System.out.println("Player " + players.indexOf(p) + " registered as gamepad " + controller);
+          break;
+        }
       }
     }
+  }
+
+  public Collection<Player> getPlayers() {
+    return players;
   }
 
   public static void main(String[] args) {

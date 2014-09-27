@@ -2,6 +2,7 @@ package com.gamelabgraz.jam.tpbjg.items;
 
 import java.util.Arrays;
 
+import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 
 /**
@@ -24,10 +25,22 @@ public class MultipleItemAction implements IItemAction {
    * @see com.gamelabgraz.jam.tpbjg.items.IItemAction#process(com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame)
    */
   @Override
-  public void process(ThePeanutButterJellyGame game) {
+  public void startEffect(ThePeanutButterJellyGame game, Player player) {
     Arrays.stream(toMultiply).forEach(a -> {
      for (int i = 0; i < count; i++) {
-      a.process(game);
+      a.startEffect(game, player);
     }});
+  }
+
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.items.IItemAction#endEffect(com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame, com.gamelabgraz.jam.tpbjg.Player)
+   */
+  @Override
+  public void endEffect(ThePeanutButterJellyGame game, Player effector) {
+    Arrays.stream(toMultiply).forEach(a -> {
+      for (int i = 0; i < count; i++) {
+       a.endEffect(game, effector);
+     }});
   }
 }

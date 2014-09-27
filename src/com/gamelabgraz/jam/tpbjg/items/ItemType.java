@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import at.chrl.nutils.Rnd;
 
+import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.implementation.CometAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.EarthAction;
@@ -38,9 +39,9 @@ public enum ItemType {
     this.actions = actions;
   }
 
-  public void process(ThePeanutButterJellyGame game) {
+  public void process(ThePeanutButterJellyGame game, Player player) {
     for (IItemAction iItemAction : actions)
-      iItemAction.process(game);
+      iItemAction.startEffect(game, player);
   }
 
   public static Collection<ItemType> getNonTraps() {

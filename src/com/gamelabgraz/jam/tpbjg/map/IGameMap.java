@@ -53,6 +53,35 @@ public interface IGameMap {
   void setField(final int x, final int y, final FieldType type);
 
   /**
+   * returns if given field is revealed or not
+   * 
+   * @param x
+   *        given field x coordinate
+   * @param y
+   *        given field y coordinate
+   * @return
+   *        if field is revealed(true), or not(false)
+   */
+  boolean isRevealed(final int x, final int y);
+  
+  /**
+   * Set reveal state of given field
+   * 
+   * @param x
+   *        given field x coordinate
+   * @param y
+   *        given field y coordinate
+   * @param revealed
+   *        revealed state to set
+   */
+  void setRevealed(final int x, final int y, final boolean revealed);
+  
+  /**
+   * Unreveal everything
+   */
+  void unrevealMap();
+  
+  /**
    * Util method for easy iteration over all fields
    * @param proc
    *        {@link IFieldProcessor} instance, or lambda expression

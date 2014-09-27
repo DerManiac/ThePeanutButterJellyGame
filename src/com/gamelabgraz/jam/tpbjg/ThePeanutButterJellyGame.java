@@ -42,6 +42,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
   public void render(GameContainer container, Graphics graphics) throws SlickException {
     gameMapRenderer.render();
     players.forEach(Player::render);
+    itemsOnMap.forEach(Item::render);
   }
 
   @Override

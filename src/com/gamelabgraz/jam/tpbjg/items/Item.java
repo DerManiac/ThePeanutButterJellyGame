@@ -21,6 +21,7 @@ public class Item {
 
   public void processEffect(ThePeanutButterJellyGame game, Player player) {
     this.type.process(game, player);
+    game.getItemsOnMap().remove(this);
   }
 
   /**
@@ -42,5 +43,9 @@ public class Item {
    */
   public int getY() {
     return y;
+  }
+
+  public void render() {
+    type.getImage().draw(x * 64, y * 64);
   }
 }

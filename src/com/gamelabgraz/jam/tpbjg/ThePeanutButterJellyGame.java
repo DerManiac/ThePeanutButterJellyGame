@@ -6,11 +6,17 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import com.gamelabgraz.jam.tpbjg.map.IGameMap;
+import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
+import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
+
 public class ThePeanutButterJellyGame extends BasicGame {
 
   private int gameSpeed = 100;
 
   private Player player1, player2;
+
+  private GameMapRenderer gameMapRenderer;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -18,6 +24,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
+    gameMapRenderer.render();
+
     player1.render();
     player2.render();
   }
@@ -29,6 +37,11 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setVSync(true);
     player1 = new Player(container, 1, false);
     player2 = new Player(container, 2, false);
+
+    // Load sample map
+    SampleGameMapFactory factory = new SampleGameMapFactory();
+    IGameMap sample_map = factory.getGameMap(0);
+    gameMapRenderer = new GameMapRenderer(container.getGraphics(), sample_map);
   }
 
   @Override

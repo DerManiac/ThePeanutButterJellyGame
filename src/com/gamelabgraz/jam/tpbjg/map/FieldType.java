@@ -9,7 +9,7 @@ import org.newdawn.slick.SpriteSheet;
  *
  */
 public enum FieldType {
-  EMPTY("assets/graphics/ground.png", 64, 64, 0, 0), WALL("assets/graphics/walls.png", 64, 64, 0, 0);
+  EMPTY("assets/graphics/ground.png", 64, 64, 0, 0), WALL("assets/graphics/walls.png", 64, 64, 9, 0);
 
   private Image background;
 

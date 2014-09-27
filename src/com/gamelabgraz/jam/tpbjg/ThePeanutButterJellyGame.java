@@ -13,7 +13,6 @@ import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
 import com.gamelabgraz.jam.tpbjg.map.renderer.GameMapRenderer;
 
-
 public class ThePeanutButterJellyGame extends BasicGame {
 
   private int gameSpeed = 100;
@@ -21,6 +20,11 @@ public class ThePeanutButterJellyGame extends BasicGame {
   private ArrayList<Player> players = new ArrayList<Player>();
 
   private GameMapRenderer gameMapRenderer;
+
+  private static final int P1_START_X = 0;
+  private static final int P1_START_Y = 0;
+  private static final int P2_START_X = 100;
+  private static final int P2_START_Y = 100;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -36,10 +40,16 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMaximumLogicUpdateInterval(gameSpeed);
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
-    players.add(new Player(container, this, 1, false));
-    // players.add(new Player(container, this, 2, false));
-    // players.get(1).setX(65);
-    
+
+    Player p1 = new Player(container, this, 1, false);
+    Player p2 = new Player(container, this, 2, false);
+    p1.setX(P1_START_X);
+    p1.setY(P1_START_Y);
+    p2.setX(P2_START_X);
+    p2.setY(P2_START_Y);
+    players.add(p1);
+    players.add(p2);
+
     // Load sample map
     SampleGameMapFactory factory = new SampleGameMapFactory();
     IGameMap sample_map = factory.getGameMap(0);

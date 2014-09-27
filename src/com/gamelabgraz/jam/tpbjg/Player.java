@@ -39,10 +39,10 @@ public class Player {
       left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
       right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
     } else {
-      up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
-      down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
-      left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
-      right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
+      up = new Animation(new SpriteSheet("assets/graphics/jelly_nach_oben.png", 64, 64), 300);
+      down = new Animation(new SpriteSheet("assets/graphics/jelly_nach_unten.png", 64, 64), 300);
+      left = new Animation(new SpriteSheet("assets/graphics/jelly_nach_links.png", 64, 64), 300);
+      right = new Animation(new SpriteSheet("assets/graphics/jelly_nach_rechts.png", 64, 64), 300);
     }
     up.setAutoUpdate(false);
     down.setAutoUpdate(false);

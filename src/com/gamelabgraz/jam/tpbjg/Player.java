@@ -14,14 +14,19 @@ public class Player {
   private final Controls controls;
 
   private final GameContainer container;
+  private final ThePeanutButterJellyGame game;
 
   float x = 0, y = 0;
 
+  private static final int size = 64;
+
   private static final float speed = 0.1f;
 
-  public Player(final GameContainer container, final int player, final boolean useGamepad) throws SlickException {
+  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final int player, final boolean useGamepad)
+      throws SlickException {
     controls = new Controls(player, useGamepad);
     this.container = container;
+    this.game = game;
 
     up = new Animation(new SpriteSheet("assets/graphics/walls.png", 256, 70), 300);
     down = new Animation(new SpriteSheet("assets/graphics/ground.png", 64, 64), 300);
@@ -38,14 +43,14 @@ public class Player {
   public void move(final int delta) {
     final Input input = container.getInput();
     if (controls.isUseGamepad()) {
-      final int actionButton = controls.getActionButton();
-      if (input.isControllerUp(actionButton))
+      final int gamepadNumber = controls.getGamepadNumber();
+      if (input.isControllerUp(gamepadNumber))
         moveUp(delta);
-      else if (input.isControllerUp(actionButton))
+      else if (input.isControllerUp(gamepadNumber))
         moveDown(delta);
-      else if (input.isControllerUp(actionButton))
+      else if (input.isControllerUp(gamepadNumber))
         moveLeft(delta);
-      else if (input.isControllerUp(actionButton))
+      else if (input.isControllerUp(gamepadNumber))
         moveRight(delta);
       else
         moveStop();
@@ -66,25 +71,34 @@ public class Player {
   }
 
   private void moveUp(final int delta) {
-    y -= delta * speed;
+    final float y_temp = y - (delta * speed);
+    if (isCollition(x, y_temp))
+      return;
+    y = y_temp;
     current = up;
     current.update(delta);
   }
 
   private void moveDown(final int delta) {
-    y += delta * speed;
+    final float y_temp = y + (delta * speed);
+    if (isCollition(x, y_temp))
+      ;
     current = down;
     current.update(delta);
   }
 
   private void moveLeft(final int delta) {
-    x -= delta * speed;
+    final float x_temp = x - (delta * speed);
+    if (isCollition(x_temp, y))
+      return;
     current = left;
     current.update(delta);
   }
 
   private void moveRight(final int delta) {
-    x += delta * speed;
+    final float x_temp = x + (delta * speed);
+    if (isCollition(x_temp, y))
+      return;
     current = right;
     current.update(delta);
   }
@@ -101,4 +115,31 @@ public class Player {
     return controls;
   }
 
+  public float getX() {
+    return x;
+  }
+
+  public float getY() {
+    return y;
+  }
+
+  public void setX(float x) {
+    this.x = x;
+  }
+
+  public void setY(float y) {
+    this.y = y;
+  }
+
+  private boolean isCollition(float x, float y) {
+
+    if (x < 0 || y < 0 || x > container.getScreenWidth() || y > container.getScreenHeight())
+      return true;
+
+    for (Player p : game.getPlayers())
+      if (p != this && (((p.getX() + 64) > x) || ((p.getX() - 64) < x) || ((p.getY() + 64) > y) || ((p.getY() - 64) < y)))
+        return true;
+
+    return false;
+  }
 }

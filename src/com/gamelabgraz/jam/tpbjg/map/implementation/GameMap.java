@@ -1,5 +1,6 @@
 package com.gamelabgraz.jam.tpbjg.map.implementation;
 
+import java.util.BitSet;
 import java.util.stream.IntStream;
 
 import com.gamelabgraz.jam.tpbjg.map.FieldType;
@@ -14,6 +15,7 @@ import com.gamelabgraz.jam.tpbjg.map.IGameMap;
  */
 public final class GameMap implements IGameMap {
 
+  final BitSet revealed;
   final FieldType[][] map;
   private int width;
   private int height;
@@ -31,6 +33,7 @@ public final class GameMap implements IGameMap {
     this.foreachField((x, y, type) -> {
       map[x][y] = FieldType.EMPTY;
     });
+    this.revealed = new BitSet(this.width * this.height);
   }
 
   /**
@@ -96,5 +99,32 @@ public final class GameMap implements IGameMap {
         proc.process(x, y, getField(x, y));
       });
     });
+  }
+  
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#isRevealed(int, int)
+   */
+  @Override
+  public boolean isRevealed(int x, int y) {
+    return this.revealed.get(y*width + x);
+  }
+
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#setRevealed(int, int, boolean)
+   */
+  @Override
+  public void setRevealed(int x, int y, boolean revealed) {
+    this.revealed.set(y*width + x, revealed);
+  }
+
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#unrevealMap()
+   */
+  @Override
+  public void unrevealMap() {
+    this.revealed.clear();
   }
 }

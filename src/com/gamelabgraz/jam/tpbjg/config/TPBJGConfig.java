@@ -22,5 +22,7 @@ public class TPBJGConfig {
   @Property(key = "level.file.directory", defaultValue = "levels", description = "Level File directory")
   public static File LEVEL_FILE_DIRECTORY;
 
-  
+  @Property(key = "item.spawn.timer", defaultValue = "10000", description = "Item spawn timer in milliseconds")
+  public static int ITEM_SPAWN_TIME;
+
 }

@@ -2,13 +2,14 @@ package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Random;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+
+import at.chrl.nutils.Rnd;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.items.Item;
@@ -75,7 +76,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
     itemSpawnTimer += delta;
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
-      ArrayList<Integer[]> empty_fields = new ArrayList<Integer[]>();
+      ArrayList<int[]> empty_fields = new ArrayList<int[]>();
       gameMap.foreachField((x, y, type) -> {
         if (type == FieldType.EMPTY) {
           boolean field_is_free = true;
@@ -85,16 +86,16 @@ public class ThePeanutButterJellyGame extends BasicGame {
             }
           }
           if (field_is_free) {
-            empty_fields.add(new Integer[] { x, y });
+            empty_fields.add(new int[] { x, y });
           }
         }
       });
 
-      Random rand = new Random();
-
-      Item item_to_spawn = ItemGenerator.getInstance().generateRandomItem();
+      int spawn_index = Rnd.nextInt(empty_fields.size());
+      int[] spawn_location = empty_fields.get(spawn_index);
+      Item item_to_spawn = ItemGenerator.getInstance().generateRandomItem(spawn_location[0], spawn_location[1]);
+      itemsOnMap.add(item_to_spawn);
     }
-
   }
 
   public void controllerButtonPressed(int controller, int button) {

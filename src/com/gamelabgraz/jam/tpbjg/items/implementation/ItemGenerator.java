@@ -28,4 +28,13 @@ public class ItemGenerator implements IItemGenerator {
   public static ItemGenerator getInstance() {
     return SingletonHolder.instance;
   }
+
+  /**
+   * {@inheritDoc}
+   * @see com.gamelabgraz.jam.tpbjg.items.IItemGenerator#generateRandomTrap(int, int)
+   */
+  @Override
+  public Item generateRandomTrap(int x, int y) {
+    return new Item(x, y, ItemType.getRandomTrap());
+  }
 }

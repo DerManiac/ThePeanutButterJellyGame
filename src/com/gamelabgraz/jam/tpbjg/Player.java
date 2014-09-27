@@ -22,7 +22,7 @@ public class Player {
 
   private static final int size = 64;
 
-  private static final float speed = 0.1f;
+  private float speed = 0.1f;
 
   public Player(final GameContainer container, final ThePeanutButterJellyGame game, final int player, final boolean useGamepad)
       throws SlickException {
@@ -134,6 +134,20 @@ public class Player {
 
   public void setY(float y) {
     this.y = y;
+  }
+
+  /**
+   * @return the speed
+   */
+  public float getSpeed() {
+    return speed;
+  }
+
+  /**
+   * @param speed the speed to set
+   */
+  public void setSpeed(float speed) {
+    this.speed = speed;
   }
 
   private boolean isCollition(float x, float y) {

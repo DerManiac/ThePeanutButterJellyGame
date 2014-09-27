@@ -10,7 +10,6 @@ import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.implementation.CometAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.EarthAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.MagnetAction;
-import com.gamelabgraz.jam.tpbjg.items.implementation.RandomTrapAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
 
 /**
@@ -26,7 +25,7 @@ public enum ItemType {
   TRAP(true, new TrapAction()),
 
   // Multiple Trap
-  TRAPTRAP(false, new MultipleItemAction(5, new RandomTrapAction())),
+  TRAPTRAP(false, new MultipleItemAction(5, new TrapAction())),
 
   // Traps
   FREEZE(true, new TrapAction());

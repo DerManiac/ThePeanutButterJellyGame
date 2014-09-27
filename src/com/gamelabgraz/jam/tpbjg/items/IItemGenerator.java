@@ -7,4 +7,5 @@ package com.gamelabgraz.jam.tpbjg.items;
 public interface IItemGenerator {
 
   public Item generateRandomItem(final int x, final int y);
+  public Item generateRandomTrap(final int x, final int y);
 }

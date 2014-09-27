@@ -136,10 +136,9 @@ public class Player {
     if (x < 0 || y < 0 || x > container.getScreenWidth() || y > container.getScreenHeight())
       return true;
 
-    // for (Player p : game.getPlayers())
-    // if (p != this && (((p.getX() + size) > x) || ((p.getX() - size) < x) ||
-    // ((p.getY() + size) > y) || ((p.getY() - size) < y)))
-    // return true;
+    for (Player p : game.getPlayers())
+      if (p != this && (((p.getX() + 64) > x) || ((p.getX() - 64) < x) || ((p.getY() + 64) > y) || ((p.getY() - 64) < y)))
+        return true;
 
     return false;
   }

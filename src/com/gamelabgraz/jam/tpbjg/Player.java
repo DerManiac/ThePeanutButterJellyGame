@@ -227,10 +227,11 @@ public class Player {
     ArrayList<Item> temp = new ArrayList<>(game.getGameMap().getItemsOnMap());
 
     temp.forEach(i -> {
-      if (i.getX() == x_temp && i.getY() == y_temp)
+      if (i.getX() == x_temp && i.getY() == y_temp){
         i.processEffect(game, this);
       Arrays.stream(i.getType().getItemActions()).forEach(
           ii -> game.getItemEffectHandler().registerEffect(ii, this, i.getType().getDuration()));
+      }
     });
 
   }

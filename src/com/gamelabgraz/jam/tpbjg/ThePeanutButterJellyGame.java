@@ -118,5 +118,4 @@ public class ThePeanutButterJellyGame extends BasicGame {
       e.printStackTrace();
     }
   }
-
 }

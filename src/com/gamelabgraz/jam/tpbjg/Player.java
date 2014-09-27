@@ -144,8 +144,13 @@ public class Player {
   }
 
   /**
+   * <<<<<<< HEAD
+   * 
    * @param speed
-   *          the speed to set
+   *          the speed to set =======
+   * @param speed
+   *          the speed to set >>>>>>> branch 'master' of
+   *          https://github.com/DerManiac/ThePeanutButterJellyGame.git
    */
   public void setSpeed(float speed) {
     this.speed = speed;

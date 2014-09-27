@@ -6,6 +6,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import com.gamelabgraz.jam.tpbjg.map.FieldType;
+
 public class Player {
 
   private final Animation up, down, left, right;
@@ -28,10 +30,10 @@ public class Player {
     this.container = container;
     this.game = game;
 
-    up = new Animation(new SpriteSheet("assets/graphics/walls.png", 256, 70), 300);
-    down = new Animation(new SpriteSheet("assets/graphics/ground.png", 64, 64), 300);
-    left = new Animation(new SpriteSheet("assets/graphics/baseflag.png", 64, 64), 300);
-    right = new Animation(new SpriteSheet("assets/graphics/baseflag.png", 64, 64), 300);
+    up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 100);
+    down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 100);
+    left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 100);
+    right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 100);
     up.setAutoUpdate(false);
     down.setAutoUpdate(false);
     left.setAutoUpdate(false);
@@ -143,6 +145,9 @@ public class Player {
       if (p != this && x < p.getX() + size - 1 && x + size - 1 > p.getX() && y < p.getY() + size - 1 && size - 1 + y > p.getY())
         return true;
     }
+
+    if (game.getMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY)
+      return true;
 
     return false;
   }

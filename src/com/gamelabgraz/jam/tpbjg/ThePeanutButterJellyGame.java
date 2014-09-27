@@ -26,6 +26,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
   private static final int P2_START_X = 100;
   private static final int P2_START_Y = 100;
 
+  private IGameMap map;
+
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
   }
@@ -55,6 +57,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     SampleGameMapFactory factory = new SampleGameMapFactory();
     IGameMap sample_map = factory.getGameMap(0);
     gameMapRenderer = new GameMapRenderer(sample_map);
+    map = sample_map;
   }
 
   @Override
@@ -80,6 +83,10 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   public Collection<Player> getPlayers() {
     return players;
+  }
+
+  public IGameMap getMap() {
+    return map;
   }
 
   public static void main(String[] args) {

@@ -3,6 +3,7 @@ package com.gamelabgraz.jam.tpbjg.map.implementation;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.Vector;
 import java.util.stream.IntStream;
 
 import com.gamelabgraz.jam.tpbjg.items.Item;
@@ -34,7 +35,7 @@ public final class GameMap implements IGameMap {
     this.width = width;
     this.height = height;
     this.itemsAtStart = items;
-    this.itemsOnMap = new ArrayList<Item>(items);
+    this.itemsOnMap = new Vector<Item>(items);
     map = new FieldType[width][height];
     // init empty map
     this.foreachField((x, y, type) -> {

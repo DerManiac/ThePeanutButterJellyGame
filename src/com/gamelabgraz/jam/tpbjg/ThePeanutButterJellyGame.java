@@ -14,6 +14,7 @@ import at.chrl.nutils.Rnd;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.items.Item;
+import com.gamelabgraz.jam.tpbjg.items.ItemEffectHandler;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
@@ -27,6 +28,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private GameMapRenderer gameMapRenderer;
   private IGameMap gameMap;
+  private ItemEffectHandler itemEffectHandler;
 
   private int itemSpawnTimer;
 
@@ -37,6 +39,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
+    this.itemEffectHandler = new ItemEffectHandler(this);
   }
 
   @Override
@@ -117,5 +120,12 @@ public class ThePeanutButterJellyGame extends BasicGame {
     } catch (SlickException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * @return the itemEffectHandler
+   */
+  public ItemEffectHandler getItemEffectHandler() {
+    return itemEffectHandler;
   }
 }

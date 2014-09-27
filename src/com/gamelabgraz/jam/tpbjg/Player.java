@@ -2,6 +2,8 @@ package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
 
+import java.util.Arrays;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
@@ -191,6 +193,8 @@ public class Player {
     temp.forEach(i -> {
       if (i.getX() == x_temp && i.getY() == y_temp)
         i.processEffect(game, this);
+      Arrays.stream(i.getType().getItemActions()).forEach(
+          ii -> game.getItemEffectHandler().registerEffect(ii, this, i.getType().getDuration()));
     });
 
   }

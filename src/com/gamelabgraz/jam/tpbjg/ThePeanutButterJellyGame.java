@@ -10,7 +10,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int gameSpeed = 100;
 
-  private Player player1;
+  private Player player1, player2;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -18,8 +18,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
-
     player1.render();
+    player2.render();
   }
 
   @Override
@@ -28,12 +28,12 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
     player1 = new Player(container, 1, false);
-
+    player2 = new Player(container, 2, false);
   }
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
-
+    player1.move(delta);
     player1.move(delta);
   }
 

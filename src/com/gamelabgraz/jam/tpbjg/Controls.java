@@ -2,6 +2,8 @@ package com.gamelabgraz.jam.tpbjg;
 
 public class Controls {
 
+  public static final int GAMEPAD_START = 10;
+
   private boolean useGamepad;
 
   private int player;
@@ -10,7 +12,6 @@ public class Controls {
   private int leftButton;
   private int rightButton;
   private int actionButton;
-  private int controllerStartButton;
 
   public Controls(int player) {
     // initializing default controls
@@ -43,7 +44,6 @@ public class Controls {
       rightButton = 205; // arrow right
     }
 
-    controllerStartButton = 8; // xbox start button
   }
 
   public boolean isUseGamepad() {

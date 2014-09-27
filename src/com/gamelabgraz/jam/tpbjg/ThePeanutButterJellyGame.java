@@ -2,6 +2,7 @@ package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -12,6 +13,7 @@ import org.newdawn.slick.SlickException;
 import at.chrl.nutils.Rnd;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
+import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
@@ -41,6 +43,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
   public void render(GameContainer container, Graphics graphics) throws SlickException {
     gameMapRenderer.render();
     players.forEach(Player::render);
+    gameMap.getItemsOnMap().forEach(i -> i.render());
   }
 
   @Override
@@ -71,10 +74,13 @@ public class ThePeanutButterJellyGame extends BasicGame {
     itemSpawnTimer += delta;
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
       itemSpawnTimer = 0;
+      Item itemToAdd = null;
       if(Rnd.nextBoolean())
-        this.gameMap.getItemsOnMap().add(ItemGenerator.getInstance().generateRandomItem(this.gameMap));
+        itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
       else
-        this.gameMap.getItemsOnMap().add(ItemGenerator.getInstance().generateRandomStartItem(this.gameMap));
+        itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
+      if(Objects.nonNull(itemToAdd));
+        this.gameMap.getItemsOnMap().add(itemToAdd);
     }
   }
 

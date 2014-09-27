@@ -84,9 +84,18 @@ public class Player {
   }
 
   private void moveUp(final int delta) {
-    final float y_temp = y - (delta * speed);
-    if (isCollition(x, y_temp))
-      return;
+
+    float y_delta = (delta * speed);
+    float y_temp = y - y_delta;
+    if (isCollition(x, y_temp)) {
+      while (y_delta > 0.1f) {
+        y_delta /= 2;
+        if (isCollition(x, y_temp))
+          y_temp = y + y_delta;
+        else
+          y_temp = y - y_delta;
+      }
+    }
     y = y_temp;
     current = up;
     current.update(delta);
@@ -155,13 +164,8 @@ public class Player {
   }
 
   /**
-   * <<<<<<< HEAD
-   * 
    * @param speed
-   *          the speed to set =======
-   * @param speed
-   *          the speed to set >>>>>>> branch 'master' of
-   *          https://github.com/DerManiac/ThePeanutButterJellyGame.git
+   *          the speed to set
    */
   public void setSpeed(float speed) {
     this.speed = speed;

@@ -10,7 +10,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
-import com.gamelabgraz.jam.tpbjg.items.Item;
 import com.gamelabgraz.jam.tpbjg.items.implementation.ItemGenerator;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.implementation.SampleGameMapFactory;
@@ -24,8 +23,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private GameMapRenderer gameMapRenderer;
   private IGameMap gameMap;
-
-  private ArrayList<Item> itemsOnMap;
 
   private int itemSpawnTimer;
 
@@ -63,8 +60,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
     SampleGameMapFactory factory = new SampleGameMapFactory();
     gameMap = factory.getGameMap(0);
     gameMapRenderer = new GameMapRenderer(gameMap);
-
-    itemsOnMap = new ArrayList<Item>();
   }
 
   @Override
@@ -74,9 +69,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     itemSpawnTimer += delta;
     if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
       itemSpawnTimer = 0;
-      Item item_to_spawn = ItemGenerator.getInstance().generateRandomItem(this);
-      if (item_to_spawn != null)
-        itemsOnMap.add(item_to_spawn);
+      ItemGenerator.getInstance().generateRandomItem(this.gameMap);
     }
   }
 
@@ -103,10 +96,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   public IGameMap getGameMap() {
     return gameMap;
-  }
-
-  public ArrayList<Item> getItemsOnMap() {
-    return itemsOnMap;
   }
 
   public static void main(String[] args) {

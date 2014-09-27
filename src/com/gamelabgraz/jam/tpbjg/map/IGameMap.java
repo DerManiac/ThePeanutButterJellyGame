@@ -1,5 +1,9 @@
 package com.gamelabgraz.jam.tpbjg.map;
 
+import java.util.Collection;
+
+import com.gamelabgraz.jam.tpbjg.items.Item;
+
 /**
  * @author vinzynth Sep 27, 2014 - 11:54:05 AM
  *
@@ -87,4 +91,20 @@ public interface IGameMap {
    *        {@link IFieldProcessor} instance, or lambda expression
    */
   void foreachField(final IFieldProcessor proc);
+  
+  /**
+   * Returns items available at Startup
+   * 
+   * @return 
+   *        all items available at game Start
+   */
+  Collection<Item> getStartItems();
+  
+  /**
+   * Return all items currently on map
+   * 
+   * @return
+   *        all items on map
+   */
+  Collection<Item> getItemsOnMap();
 }

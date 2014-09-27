@@ -82,7 +82,8 @@ public class Player {
   private void moveDown(final int delta) {
     final float y_temp = y + (delta * speed);
     if (isCollition(x, y_temp))
-      ;
+      return;
+    y = y_temp;
     current = down;
     current.update(delta);
   }
@@ -91,6 +92,7 @@ public class Player {
     final float x_temp = x - (delta * speed);
     if (isCollition(x_temp, y))
       return;
+    x = x_temp;
     current = left;
     current.update(delta);
   }
@@ -99,6 +101,7 @@ public class Player {
     final float x_temp = x + (delta * speed);
     if (isCollition(x_temp, y))
       return;
+    x = x_temp;
     current = right;
     current.update(delta);
   }
@@ -133,13 +136,13 @@ public class Player {
 
   private boolean isCollition(float x, float y) {
 
-    if (x < 0 || y < 0 || x > container.getScreenWidth() || y > container.getScreenHeight())
+    if (x < 0 || y < 0 || (x + size) > container.getWidth() || (y + size) > container.getHeight())
       return true;
 
-    // for (Player p : game.getPlayers())
-    // if (p != this && (((p.getX() + size) > x) || ((p.getX() - size) < x) ||
-    // ((p.getY() + size) > y) || ((p.getY() - size) < y)))
-    // return true;
+    for (Player p : game.getPlayers()) {
+      if (p != this && x < p.getX() + size - 1 && x + size - 1 > p.getX() && y < p.getY() + size - 1 && size - 1 + y > p.getY())
+        return true;
+    }
 
     return false;
   }

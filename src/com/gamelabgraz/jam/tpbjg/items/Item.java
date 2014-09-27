@@ -1,5 +1,6 @@
 package com.gamelabgraz.jam.tpbjg.items;
 
+import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 
 /**
@@ -18,8 +19,8 @@ public class Item {
     this.type = type;
   }
 
-  public void processEffect(ThePeanutButterJellyGame game) {
-    this.type.process(game);
+  public void processEffect(ThePeanutButterJellyGame game, Player player) {
+    this.type.process(game, player);
   }
 
   /**

@@ -2,7 +2,7 @@ package com.gamelabgraz.jam.tpbjg;
 
 public class Controls {
 
-  public static final int GAMEPAD_START = 10;
+  public static final int GAMEPAD_START = 8;
 
   private boolean useGamepad;
 
@@ -12,6 +12,8 @@ public class Controls {
   private int leftButton;
   private int rightButton;
   private int actionButton;
+
+  private int gamepadNumber;
 
   public Controls(int player) {
     // initializing default controls
@@ -92,6 +94,14 @@ public class Controls {
 
   public void setActionButton(int actionButton) {
     this.actionButton = actionButton;
+  }
+
+  public int getGamepadNumber() {
+    return gamepadNumber;
+  }
+
+  public void setGamepadNumber(int gamepadNumber) {
+    this.gamepadNumber = gamepadNumber;
   }
 
 }

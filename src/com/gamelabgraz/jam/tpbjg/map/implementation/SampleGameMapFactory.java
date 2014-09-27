@@ -20,7 +20,7 @@ public class SampleGameMapFactory implements IGameMapFactory {
    */
   @Override
   public IGameMap getGameMap(int mapId) throws NoGameMapFoundException {
-    IGameMap gm = new GameMap(0, 20, 30);
+    IGameMap gm = new GameMap(mapId, 20, 30);
     gm.foreachField((x,y,type) -> gm.setField(x, y, FieldType.values()[Rnd.nextInt(FieldType.values().length)]));
     return gm;
   }

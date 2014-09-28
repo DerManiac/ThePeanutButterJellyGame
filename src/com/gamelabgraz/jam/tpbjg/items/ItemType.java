@@ -27,9 +27,6 @@ public enum ItemType {
   EARTH(false, "assets/graphics/planet.png", 64, 64, 5000, new EarthAction()), //
   MAGNET(false, "assets/graphics/magnet_single.png", 64, 64, 0, new MagnetAction()), //
 
-  // Trap trigger
-  TRAP(false, "assets/graphics/baseflag.png", 64, 64, 0, new TrapAction()),
-
   // Multiple Trap
   TRAPTRAP(false, "assets/graphics/grey_block.png", 64, 64, 0, new MultipleItemAction(5, new TrapAction())),
   // Traps

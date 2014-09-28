@@ -1,7 +1,7 @@
 package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import org.newdawn.slick.AppGameContainer;
@@ -9,6 +9,8 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.TrueTypeFont;
 
 import at.chrl.nutils.Rnd;
 
@@ -32,6 +34,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int itemSpawnTimer;
 
+  private int playerWon = -1;
+
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
     this.itemEffectHandler = new ItemEffectHandler(this);
@@ -40,8 +44,18 @@ public class ThePeanutButterJellyGame extends BasicGame {
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
     gameMapRenderer.render();
-    players.forEach(Player::render);
     gameMap.getItemsOnMap().forEach(i -> i.render());
+    players.forEach(Player::renderGlass);
+    players.forEach(Player::render);
+
+    if (playerWon != -1) {
+      graphics.setFont(new TrueTypeFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 48), true));
+      String name = "Peanut butter";
+      if (playerWon == 2) {
+        name = "Jelly";
+      }
+      graphics.drawString(name + " WON!", app.getWidth() / 2 - 150, app.getHeight() / 2 - 100);
+    }
   }
 
   @Override
@@ -64,24 +78,28 @@ public class ThePeanutButterJellyGame extends BasicGame {
     players.add(p1);
     players.add(p2);
 
+    Sound bgmusic = new Sound("assets/sounds/theme1.wav");
+    bgmusic.loop();
   }
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
-    itemEffectHandler.processDelta(delta);
-    players.forEach(p -> p.move(delta));
+    if (playerWon == -1) {
+      itemEffectHandler.processDelta(delta);
+      players.forEach(p -> p.update(delta));
 
-    itemSpawnTimer += delta;
-    if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
-      itemSpawnTimer = 0;
-      Item itemToAdd = null;
-      if (Rnd.nextBoolean())
-        itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
-      else
-        itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
-      if (Objects.nonNull(itemToAdd))
-        ;
-      this.gameMap.getItemsOnMap().add(itemToAdd);
+      itemSpawnTimer += delta;
+      if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
+        itemSpawnTimer = 0;
+        Item itemToAdd = null;
+        if (Rnd.nextBoolean())
+          itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
+        else
+          itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
+        if (Objects.nonNull(itemToAdd))
+          ;
+        this.gameMap.getItemsOnMap().add(itemToAdd);
+      }
     }
   }
 
@@ -102,8 +120,12 @@ public class ThePeanutButterJellyGame extends BasicGame {
     }
   }
 
-  public Collection<Player> getPlayers() {
+  public List<Player> getPlayers() {
     return players;
+  }
+
+  public void setPlayerWon(int player) {
+    this.playerWon = player;
   }
 
   public IGameMap getGameMap() {

@@ -83,7 +83,8 @@ public class XMLGameMapDTO {
 
     // set spawn points
     for (int i = 0; i < map.getPlayerSpawns().size(); i++) {
-      this.spawns.add(new XMLSpawnDTO(map.getPlayerSpawns().get(i)[0], map.getPlayerSpawns().get(i)[1], i));
+      this.spawns.add(new XMLSpawnDTO(map.getPlayerSpawns().get(i)[0], map.getPlayerSpawns().get(i)[1],
+          map.getPlayerGlassSpawns().get(i)[0], map.getPlayerGlassSpawns().get(i)[1], i));
     }
 
     // set width

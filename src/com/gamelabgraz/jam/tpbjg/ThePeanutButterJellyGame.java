@@ -1,7 +1,7 @@
 package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import org.newdawn.slick.AppGameContainer;
@@ -47,6 +47,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     gameMapRenderer.render();
     players.forEach(Player::render);
     gameMap.getItemsOnMap().forEach(i -> i.render());
+    players.forEach(Player::renderGlass);
   }
 
   @Override
@@ -107,7 +108,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     }
   }
 
-  public Collection<Player> getPlayers() {
+  public List<Player> getPlayers() {
     return players;
   }
 

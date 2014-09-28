@@ -108,6 +108,13 @@ public interface IGameMap {
   List<int[]> getPlayerSpawns();
 
   /**
+   * Returns player glass spawn point coordinates
+   * 
+   * @return all player glass spawn points
+   */
+  List<int[]> getPlayerGlassSpawns();
+
+  /**
    * Return all items currently on map
    * 
    * @return all items on map

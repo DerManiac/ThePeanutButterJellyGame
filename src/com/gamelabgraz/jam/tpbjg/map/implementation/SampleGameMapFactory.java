@@ -26,7 +26,8 @@ public class SampleGameMapFactory implements IGameMapFactory {
    */
   @Override
   public IGameMap getGameMap(int mapId) throws NoGameMapFoundException {
-    GameMap gm = new GameMap(mapId, 20, 30, Collections.emptyList(), Arrays.asList(new int[][] { { 0, 0 }, { 19, 29 } }));
+    GameMap gm = new GameMap(mapId, 20, 30, Collections.emptyList(), Arrays.asList(new int[][] { { 1, 0 }, { 18, 29 } }),
+        Arrays.asList(new int[][] { { 0, 0 }, { 19, 29 } }));
     gm.foreachField((x, y, type) -> gm.setField(x, y, FieldType.values()[Rnd.nextInt(FieldType.values().length)]));
     gm.setStartItems(IntStream.range(0, 10).mapToObj(i -> ItemGenerator.getInstance().generateRandomItem(gm)).collect(Collectors.toList()));
     return gm;

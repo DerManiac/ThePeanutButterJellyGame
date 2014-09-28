@@ -25,4 +25,7 @@ public class TPBJGConfig {
   @Property(key = "item.spawn.timer", defaultValue = "10000", description = "Item spawn timer in milliseconds")
   public static int ITEM_SPAWN_TIME;
 
+  @Property(key = "player.lives", defaultValue = "6", description = "Number of lives a player has")
+  public static int PLAYER_LIVES;
+
 }

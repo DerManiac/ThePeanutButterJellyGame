@@ -1,7 +1,6 @@
 package com.gamelabgraz.jam.tpbjg;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 
 import org.newdawn.slick.Animation;
@@ -127,7 +126,7 @@ public class Player {
   private void moveLeft(final int delta) {
     float x_delta = (delta * speed);
     float x_temp = x - x_delta;
-    if (isCollition(x_temp, x)) {
+    if (isCollition(x_temp, y)) {
       while (x_delta > 0.1f) {
         x_delta /= 2;
         if (isCollition(x_temp, y))
@@ -146,7 +145,7 @@ public class Player {
   private void moveRight(final int delta) {
     float x_delta = (delta * speed);
     float x_temp = x + x_delta;
-    if (isCollition(x_temp, x)) {
+    if (isCollition(x_temp, y)) {
       while (x_delta > 0.1f) {
         x_delta /= 2;
         if (isCollition(x_temp, y))

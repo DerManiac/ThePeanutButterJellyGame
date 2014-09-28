@@ -91,7 +91,9 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
                   dto.getHeight(),
                   dto.getItems().stream()
                   .map(dtoi -> new Item(dtoi.getX(), dtoi.getY(), dtoi.getItemType()))
-                  .collect(Collectors.<Item>toList())
+                  .collect(Collectors.<Item>toList()),
+                  dto.getPlayerSpawns().stream().map(dtoi -> new int[]{dtoi.getX(),dtoi.getY()})
+                  .collect(Collectors.<int[]>toList())
                   );
               dto.getFields().forEach(f -> m.setField(f.getX(), f.getY(), f.getFieldType()));
               return m;

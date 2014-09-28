@@ -1,6 +1,7 @@
 package com.gamelabgraz.jam.tpbjg.map;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.gamelabgraz.jam.tpbjg.items.Item;
 
@@ -14,7 +15,7 @@ public interface IGameMap {
    * returns map identifier
    */
   int getMapId();
-  
+
   /**
    * Returns field type of field for given coordinates
    * 
@@ -43,16 +44,16 @@ public interface IGameMap {
    * @return map width
    */
   int getWidth();
-  
+
   /**
    * Sets the field at given coordinates to given type.
    * 
    * @param x
-   *        x coordinate of target field    
+   *          x coordinate of target field
    * @param y
-   *        y coordinte of target field
+   *          y coordinte of target field
    * @param type
-   *        new field type
+   *          new field type
    */
   void setField(final int x, final int y, final FieldType type);
 
@@ -60,51 +61,56 @@ public interface IGameMap {
    * returns if given field is revealed or not
    * 
    * @param x
-   *        given field x coordinate
+   *          given field x coordinate
    * @param y
-   *        given field y coordinate
-   * @return
-   *        if field is revealed(true), or not(false)
+   *          given field y coordinate
+   * @return if field is revealed(true), or not(false)
    */
   boolean isRevealed(final int x, final int y);
-  
+
   /**
    * Set reveal state of given field
    * 
    * @param x
-   *        given field x coordinate
+   *          given field x coordinate
    * @param y
-   *        given field y coordinate
+   *          given field y coordinate
    * @param revealed
-   *        revealed state to set
+   *          revealed state to set
    */
   void setRevealed(final int x, final int y, final boolean revealed);
-  
+
   /**
    * Unreveal everything
    */
   void unrevealMap();
-  
+
   /**
    * Util method for easy iteration over all fields
+   * 
    * @param proc
-   *        {@link IFieldProcessor} instance, or lambda expression
+   *          {@link IFieldProcessor} instance, or lambda expression
    */
   void foreachField(final IFieldProcessor proc);
-  
+
   /**
    * Returns items available at Startup
    * 
-   * @return 
-   *        all items available at game Start
+   * @return all items available at game Start
    */
   Collection<Item> getStartItems();
-  
+
+  /**
+   * Returns player spawn point coordinates
+   * 
+   * @return all player spawn points
+   */
+  List<int[]> getPlayerSpawns();
+
   /**
    * Return all items currently on map
    * 
-   * @return
-   *        all items on map
+   * @return all items on map
    */
   Collection<Item> getItemsOnMap();
 }

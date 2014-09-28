@@ -56,6 +56,13 @@ public class XMLGameMapDTO {
   private List<XMLItemDTO> items;
 
   /**
+   * map playerSpawns
+   */
+  @XmlElementWrapper(name = "spawns")
+  @XmlElement(name = "spawn")
+  private List<XMLSpawnDTO> spawns;
+
+  /**
    * protected default constructor for JAXB
    */
   protected XMLGameMapDTO() {
@@ -73,6 +80,11 @@ public class XMLGameMapDTO {
     map.foreachField((x, y, type) -> this.fields.add(new XMLFieldDTO(x, y, type)));
 
     this.items = map.getStartItems().stream().map(i -> new XMLItemDTO(i.getX(), i.getY(), i.getType())).collect(Collectors.toList());
+
+    // set spawn points
+    for (int i = 0; i < map.getPlayerSpawns().size(); i++) {
+      this.spawns.add(new XMLSpawnDTO(map.getPlayerSpawns().get(i)[0], map.getPlayerSpawns().get(i)[1], i));
+    }
 
     // set width
     this.width = map.getWidth();
@@ -110,6 +122,13 @@ public class XMLGameMapDTO {
    */
   public List<XMLItemDTO> getItems() {
     return items;
+  }
+
+  /**
+   * @return the player spawns
+   */
+  public List<XMLSpawnDTO> getPlayerSpawns() {
+    return spawns;
   }
 
   /**

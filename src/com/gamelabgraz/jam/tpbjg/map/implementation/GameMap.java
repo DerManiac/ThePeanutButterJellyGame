@@ -3,6 +3,7 @@ package com.gamelabgraz.jam.tpbjg.map.implementation;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import com.gamelabgraz.jam.tpbjg.items.Item;
@@ -17,7 +18,7 @@ import com.gamelabgraz.jam.tpbjg.map.IGameMap;
  *
  */
 public final class GameMap implements IGameMap {
-  
+
   final Collection<Item> itemsOnMap;
   Collection<Item> itemsAtStart;
   final BitSet revealed;
@@ -25,16 +26,19 @@ public final class GameMap implements IGameMap {
   private int width;
   private int height;
   private int id;
+  List<int[]> playerSpawns;
 
   /**
    * game Map constructor
    */
-  public GameMap(final int id, final int width, final int height, final Collection<Item> items) {
+  public GameMap(final int id, final int width, final int height, final Collection<Item> items, final List<int[]> spawns) {
     this.id = id;
     this.width = width;
     this.height = height;
     this.itemsAtStart = items;
     this.itemsOnMap = new ArrayList<Item>(items);
+    this.playerSpawns = spawns;
+
     map = new FieldType[width][height];
     // init empty map
     this.foreachField((x, y, type) -> {
@@ -70,7 +74,7 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public int getWidth() {
-     return width;
+    return width;
   }
 
   /**
@@ -81,7 +85,7 @@ public final class GameMap implements IGameMap {
    */
   @Override
   public void setField(int x, int y, FieldType type) {
-     map[x][y] = type;
+    map[x][y] = type;
   }
 
   /**
@@ -107,27 +111,30 @@ public final class GameMap implements IGameMap {
       });
     });
   }
-  
+
   /**
    * {@inheritDoc}
+   * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#isRevealed(int, int)
    */
   @Override
   public boolean isRevealed(int x, int y) {
-    return this.revealed.get(y*width + x);
+    return this.revealed.get(y * width + x);
   }
 
   /**
    * {@inheritDoc}
+   * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#setRevealed(int, int, boolean)
    */
   @Override
   public void setRevealed(int x, int y, boolean revealed) {
-    this.revealed.set(y*width + x, revealed);
+    this.revealed.set(y * width + x, revealed);
   }
 
   /**
    * {@inheritDoc}
+   * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#unrevealMap()
    */
   @Override
@@ -137,6 +144,7 @@ public final class GameMap implements IGameMap {
 
   /**
    * {@inheritDoc}
+   * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#getStartItems()
    */
   @Override
@@ -146,18 +154,31 @@ public final class GameMap implements IGameMap {
 
   /**
    * package private for {@link SampleGameMapFactory}
+   * 
    * @param startItems
    */
-  void setStartItems(Collection<Item> startItems){
+  void setStartItems(Collection<Item> startItems) {
     this.itemsAtStart = startItems;
   }
-  
+
   /**
    * {@inheritDoc}
+   * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#getItemsOnMap()
    */
   @Override
   public Collection<Item> getItemsOnMap() {
     return itemsOnMap;
   }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#getPlayerSpawns()
+   */
+  @Override
+  public List<int[]> getPlayerSpawns() {
+    return playerSpawns;
+  }
+
 }

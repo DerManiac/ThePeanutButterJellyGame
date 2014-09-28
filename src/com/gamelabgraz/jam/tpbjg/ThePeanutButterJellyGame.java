@@ -55,19 +55,20 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
 
-    Player p1 = new Player(container, this, 1, false);
-    Player p2 = new Player(container, this, 2, false);
-    p1.setX(P1_START_X);
-    p1.setY(P1_START_Y);
-    p2.setX(P2_START_X);
-    p2.setY(P2_START_Y);
-    players.add(p1);
-    players.add(p2);
-
     // Load sample map
     gameMap = GameMapFactory.getInstance().getGameMap(0);
     app.setDisplayMode(gameMap.getWidth() * GameMapRenderer.FIELD_WIDTH, gameMap.getHeight() * GameMapRenderer.FIELD_HEIGHT, false);
     gameMapRenderer = new GameMapRenderer(gameMap);
+
+    Player p1 = new Player(container, this, 1, false);
+    Player p2 = new Player(container, this, 2, false);
+    p1.setX(gameMap.getPlayerSpawns().get(0)[0] * GameMapRenderer.FIELD_WIDTH);
+    p1.setY(gameMap.getPlayerSpawns().get(0)[1] * GameMapRenderer.FIELD_HEIGHT);
+    p2.setX(gameMap.getPlayerSpawns().get(1)[0] * GameMapRenderer.FIELD_WIDTH);
+    p2.setY(gameMap.getPlayerSpawns().get(1)[1] * GameMapRenderer.FIELD_HEIGHT);
+    players.add(p1);
+    players.add(p2);
+
   }
 
   @Override

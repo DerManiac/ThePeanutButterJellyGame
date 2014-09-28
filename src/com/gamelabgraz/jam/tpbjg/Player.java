@@ -58,6 +58,20 @@ public class Player {
     current = down;
   }
 
+  /**
+   * @return the bricks
+   */
+  public int getBricks() {
+    return bricks;
+  }
+
+  /**
+   * @return the crashCharges
+   */
+  public int getCrashCharges() {
+    return crashCharges;
+  }
+
   public void update(final int delta) {
     final Input input = container.getInput();
     final float x_orig = x;
@@ -406,7 +420,7 @@ public class Player {
         updatePlayerSprites();
         for (Player p : game.getPlayers()) {
           if (p != this && p.lives == 1) {
-            game.setPlayerWon(player);
+            game.setPlayerWon(this);
           }
         }
       }

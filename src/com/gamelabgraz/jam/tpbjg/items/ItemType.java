@@ -15,7 +15,8 @@ import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.implementation.BrickAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.CometAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.EarthAction;
-import com.gamelabgraz.jam.tpbjg.items.implementation.IceAction;
+import com.gamelabgraz.jam.tpbjg.items.implementation.FreezeAction;
+import com.gamelabgraz.jam.tpbjg.items.implementation.MagnetAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
 
 /**
@@ -26,13 +27,12 @@ public enum ItemType {
   COMET(false, "assets/graphics/comet.png", 64, 64, 5000, new CometAction()), //
   EARTH(false, "assets/graphics/planet.png", 64, 64, 5000, new EarthAction()), //
   BRICK(false, "assets/graphics/brick.png", 64, 64, 5000, new BrickAction()), //
-  // MAGNET(false, "assets/graphics/magnet_single.png", 64, 64, 0, new
-  // MagnetAction()), //
+  MAGNET(false, "assets/graphics/magnet_single.png", 64, 64, 0, new MagnetAction()), //
 
   // Multiple Trap
   TRAPTRAP(false, "assets/graphics/grey_block.png", 64, 64, 0, new MultipleItemAction(5, new TrapAction())),
   // Traps
-  FREEZE(true, "assets/graphics/ice_field.png", 64, 64, 5000, new IceAction());
+  FREEZE(true, "assets/graphics/ice_field.png", 64, 64, 5000, new FreezeAction());
   private boolean isTrapTrigger;
   private IItemAction[] actions;
   private Animation animation;

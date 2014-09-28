@@ -2,6 +2,9 @@ package com.gamelabgraz.jam.tpbjg.items.implementation;
 
 import java.util.LinkedList;
 
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.IItemAction;
@@ -16,6 +19,16 @@ public class FreezeAction implements IItemAction {
 
   private final LinkedList<Float> speedDiffs = new LinkedList<Float>();
 
+  private Sound sound = null;
+
+  public FreezeAction() {
+    try {
+      sound = new Sound("assets/sounds/ice_field.wav");
+    } catch (SlickException e) {
+      e.printStackTrace();
+    }
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -27,6 +40,8 @@ public class FreezeAction implements IItemAction {
     final float speedDiff = normalspeed * (speedfactor - 1);
     effector.setSpeed(effector.getSpeed() + speedDiff);
     speedDiffs.add(speedDiff);
+    if (sound != null)
+      sound.play();
   }
 
   /**

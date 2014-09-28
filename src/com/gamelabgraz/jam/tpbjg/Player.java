@@ -44,13 +44,13 @@ public class Player {
   private int crashCharges = 0;
   private int bricks = 0;
 
-  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final FoodType type, final boolean useGamepad)
-      throws SlickException {
+  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final FoodType type, int player,
+      final boolean useGamepad) throws SlickException {
     controls = new Controls(type, useGamepad);
     this.container = container;
     this.game = game;
+    this.player = player;
     this.type = type;
-
     updatePlayerSprites();
 
     setLives(TPBJGConfig.PLAYER_LIVES);
@@ -75,8 +75,7 @@ public class Player {
       else
         moveStop();
       if (input.isControlPressed(controls.getActionButton()))
-        ;
-      action();
+        action();
 
     } else {
       if (input.isKeyDown(controls.getUpButton()))
@@ -411,5 +410,9 @@ public class Player {
         }
       }
     }
+  }
+
+  public FoodType getType() {
+    return type;
   }
 }

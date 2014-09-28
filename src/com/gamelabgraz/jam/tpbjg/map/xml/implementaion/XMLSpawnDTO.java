@@ -16,10 +16,22 @@ public class XMLSpawnDTO {
   private int x;
 
   /**
-   * y coordinate
+   * y coordinate of glass
    */
   @XmlAttribute(name = "y")
   private int y;
+
+  /**
+   * X coordinate of glass
+   */
+  @XmlAttribute(name = "glassX")
+  private int glassX;
+
+  /**
+   * y coordinate
+   */
+  @XmlAttribute(name = "glassY")
+  private int glassY;
 
   /**
    * field type
@@ -40,9 +52,11 @@ public class XMLSpawnDTO {
    * @param y
    * @param fieldType
    */
-  public XMLSpawnDTO(final int x, final int y, final int player) {
+  public XMLSpawnDTO(final int x, final int y, final int glassX, final int glassY, final int player) {
     this.x = x;
     this.y = y;
+    this.glassX = glassX;
+    this.glassY = glassY;
     this.player = player;
   }
 
@@ -58,6 +72,20 @@ public class XMLSpawnDTO {
    */
   public int getY() {
     return y;
+  }
+
+  /**
+   * @return the glass x
+   */
+  public int getGlassX() {
+    return glassX;
+  }
+
+  /**
+   * @return the glass y
+   */
+  public int getGlassY() {
+    return glassY;
   }
 
   /**

@@ -27,17 +27,20 @@ public final class GameMap implements IGameMap {
   private int height;
   private int id;
   List<int[]> playerSpawns;
+  List<int[]> glassSpawns;
 
   /**
    * game Map constructor
    */
-  public GameMap(final int id, final int width, final int height, final Collection<Item> items, final List<int[]> spawns) {
+  public GameMap(final int id, final int width, final int height, final Collection<Item> items, final List<int[]> spawns,
+      final List<int[]> glassSpawns) {
     this.id = id;
     this.width = width;
     this.height = height;
     this.itemsAtStart = items;
     this.itemsOnMap = new ArrayList<Item>(items);
     this.playerSpawns = spawns;
+    this.glassSpawns = glassSpawns;
 
     map = new FieldType[width][height];
     // init empty map
@@ -179,6 +182,16 @@ public final class GameMap implements IGameMap {
   @Override
   public List<int[]> getPlayerSpawns() {
     return playerSpawns;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMap#getPlayerGlassSpawns()
+   */
+  @Override
+  public List<int[]> getPlayerGlassSpawns() {
+    return glassSpawns;
   }
 
 }

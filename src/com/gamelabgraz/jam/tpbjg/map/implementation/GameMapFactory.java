@@ -5,6 +5,8 @@ import static java.util.Objects.isNull;
 import java.io.IOException;
 import java.util.HashMap;
 
+import at.chrl.nutils.Rnd;
+
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 import com.gamelabgraz.jam.tpbjg.map.IGameMapFactory;
@@ -19,26 +21,28 @@ import com.gamelabgraz.jam.tpbjg.map.xml.implementaion.XMLGameMapProvider;
 public class GameMapFactory implements IGameMapFactory {
 
   private final HashMap<Integer, IGameMap> cachedMapsById;
-  
+
   private final IXMLGameMapProvider xmlProvider;
-  
-  private void loadMaps(){
+
+  private void loadMaps() {
     try {
-      xmlProvider.provide(TPBJGConfig.LEVEL_FILE_DIRECTORY).forEach(g -> {cachedMapsById.put(g.getMapId(), g);});
+      xmlProvider.provide(TPBJGConfig.LEVEL_FILE_DIRECTORY).forEach(g -> {
+        cachedMapsById.put(g.getMapId(), g);
+      });
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
-  
+
   /**
    * {@inheritDoc}
    * 
    * @see com.gamelabgraz.jam.tpbjg.map.IGameMapFactory#getGameMap(int)
    */
   @Override
-  public IGameMap getGameMap(int mapId) throws NoGameMapFoundException{
+  public IGameMap getGameMap(int mapId) throws NoGameMapFoundException {
     IGameMap returnMe = cachedMapsById.get(mapId);
-    if(isNull(returnMe))
+    if (isNull(returnMe))
       throw new NoGameMapFoundException(mapId);
     return returnMe;
   }
@@ -56,4 +60,17 @@ public class GameMapFactory implements IGameMapFactory {
   public static final IGameMapFactory getInstance() {
     return SingletonHolder.instance;
   }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMapFactory#getGameMap()
+   */
+  @Override
+  public IGameMap getGameMap() throws NoGameMapFoundException {
+    int rand = Rnd.nextInt(cachedMapsById.size());
+    System.out.println("Randomly choosing map " + rand);
+    return getGameMap(rand);
+  }
+
 }

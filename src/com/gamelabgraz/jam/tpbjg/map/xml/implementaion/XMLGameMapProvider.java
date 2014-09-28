@@ -85,16 +85,11 @@ public class XMLGameMapProvider implements IXMLGameMapProvider {
         .stream()
         .map(
             dto -> {
-              IGameMap m = new GameMap(
-                  dto.getId(),
-                  dto.getWidth(),
-                  dto.getHeight(),
-                  dto.getItems().stream()
-                  .map(dtoi -> new Item(dtoi.getX(), dtoi.getY(), dtoi.getItemType()))
-                  .collect(Collectors.<Item>toList()),
-                  dto.getPlayerSpawns().stream().map(dtoi -> new int[]{dtoi.getX(),dtoi.getY()})
-                  .collect(Collectors.<int[]>toList())
-                  );
+              IGameMap m = new GameMap(dto.getId(), dto.getWidth(), dto.getHeight(), dto.getItems().stream()
+                  .map(dtoi -> new Item(dtoi.getX(), dtoi.getY(), dtoi.getItemType())).collect(Collectors.<Item> toList()), dto
+                  .getPlayerSpawns().stream().map(dtoi -> new int[] { dtoi.getX(), dtoi.getY() }).collect(Collectors.<int[]> toList()), dto
+                  .getPlayerSpawns().stream().map(dtoi -> new int[] { dtoi.getGlassX(), dtoi.getGlassY() })
+                  .collect(Collectors.<int[]> toList()));
               dto.getFields().forEach(f -> m.setField(f.getX(), f.getY(), f.getFieldType()));
               return m;
             }).collect(Collectors.toList());

@@ -1,5 +1,7 @@
 package com.gamelabgraz.jam.tpbjg.items.implementation;
 
+import java.util.LinkedList;
+
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -11,7 +13,7 @@ public class CometAction implements IItemAction {
 
   final float speedfactor = 2;
 
-  float speedDiff;
+  private final LinkedList<Float> speedDiffs = new LinkedList<Float>();
 
   private Sound sound = null;
 
@@ -33,8 +35,9 @@ public class CometAction implements IItemAction {
     if (sound != null)
       sound.play();
     float normalspeed = effector.getSpeed();
-    speedDiff = normalspeed * (speedfactor - 1);
+    final float speedDiff = normalspeed * (speedfactor - 1);
     effector.setSpeed(effector.getSpeed() + speedDiff);
+    speedDiffs.add(speedDiff);
   }
 
   /**
@@ -45,7 +48,7 @@ public class CometAction implements IItemAction {
    */
   @Override
   public void endEffect(ThePeanutButterJellyGame game, Player effector) {
-    effector.setSpeed(effector.getSpeed() - speedDiff);
+    effector.setSpeed(effector.getSpeed() - speedDiffs.poll());
   }
 
 }

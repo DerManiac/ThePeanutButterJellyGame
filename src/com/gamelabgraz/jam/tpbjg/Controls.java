@@ -15,18 +15,18 @@ public class Controls {
 
   private int gamepadNumber;
 
-  public Controls(int player) {
+  public Controls(FoodType type) {
     // initializing default controls
-    this(player, false);
+    this(type, false);
   }
 
-  public Controls(int player, boolean useGamepad) {
+  public Controls(FoodType type, boolean useGamepad) {
     // initializing default controls
     if (useGamepad) {
       this.useGamepad = useGamepad;
       actionButton = 1;
     } else {
-      if (player == 1) {
+      if (type == FoodType.PEANUT) {
         actionButton = 57; // space
       } else {
         actionButton = 28; // enter
@@ -34,7 +34,7 @@ public class Controls {
     }
 
     // init backup directional keyboard controls even if gamepad is used
-    if (player == 1) {
+    if (type == FoodType.PEANUT) {
       upButton = 17; // W
       leftButton = 30; // A
       downButton = 31; // S

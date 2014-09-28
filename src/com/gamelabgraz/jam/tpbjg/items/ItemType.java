@@ -14,6 +14,7 @@ import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.implementation.CometAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.EarthAction;
+import com.gamelabgraz.jam.tpbjg.items.implementation.IceAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.MagnetAction;
 import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
 
@@ -28,10 +29,11 @@ public enum ItemType {
 
   // Trap trigger
   TRAP(false, "assets/graphics/baseflag.png", 64, 64, 0, new TrapAction()),
+
   // Multiple Trap
-  TRAPTRAP(false, "assets/graphics/baseflag.png", 64, 64, 0, new MultipleItemAction(5, new TrapAction())),
+  TRAPTRAP(false, "assets/graphics/grey_block.png", 64, 64, 0, new MultipleItemAction(5, new TrapAction())),
   // Traps
-  FREEZE(true, "assets/graphics/baseflag.png", 64, 64, 5000, new TrapAction());
+  FREEZE(true, "assets/graphics/ice_field.png", 64, 64, 5000, new IceAction());
   private boolean isTrapTrigger;
   private IItemAction[] actions;
   private Animation animation;

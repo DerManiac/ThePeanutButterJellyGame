@@ -39,6 +39,8 @@ public class Player {
 
   private float speed = 0.1f;
 
+  private int crashCharges = 0;
+
   public Player(final GameContainer container, final ThePeanutButterJellyGame game, final FoodType type, int player,
       final boolean useGamepad) throws SlickException {
     controls = new Controls(type, useGamepad);
@@ -266,6 +268,14 @@ public class Player {
     this.speed = speed;
   }
 
+  public void addCrashCharge() {
+    crashCharges++;
+  }
+
+  public void removeCrashCharge() {
+    crashCharges = Math.max(crashCharges - 1, 0);
+  }
+
   private boolean isCollition(float x, float y) {
 
     if (x < 0 || y < 0 || (x + size) > container.getWidth() || (y + size) > container.getHeight())
@@ -276,8 +286,14 @@ public class Player {
         return true;
     }
 
-    if (game.getGameMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY)
+    if (game.getGameMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY) {
+      if (crashCharges > 0) {
+        game.getGameMap().setField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size, FieldType.EMPTY);
+        crashCharges--;
+        return false;
+      }
       return true;
+    }
 
     return false;
   }

@@ -4,9 +4,9 @@ import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 import com.gamelabgraz.jam.tpbjg.items.IItemAction;
 
-public class CometAction implements IItemAction {
+public class IceAction implements IItemAction {
 
-  final float speedfactor = 2;
+  final float speedfactor = 0.1f;
 
   float speedDiff;
 

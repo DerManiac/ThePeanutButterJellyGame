@@ -27,7 +27,7 @@ public enum ItemType {
   MAGNET(false, "assets/graphics/magnet.png", 64, 64, 0, new MagnetAction()), //
 
   // Trap trigger
-  TRAP(true, "assets/graphics/baseflag.png", 64, 64, 0, new TrapAction()),
+  TRAP(false, "assets/graphics/baseflag.png", 64, 64, 0, new TrapAction()),
   // Multiple Trap
   TRAPTRAP(false, "assets/graphics/baseflag.png", 64, 64, 0, new MultipleItemAction(5, new TrapAction())),
   // Traps

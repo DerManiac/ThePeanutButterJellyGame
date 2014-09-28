@@ -33,4 +33,14 @@ public class SampleGameMapFactory implements IGameMapFactory {
     return gm;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see com.gamelabgraz.jam.tpbjg.map.IGameMapFactory#getGameMap()
+   */
+  @Override
+  public IGameMap getGameMap() throws NoGameMapFoundException {
+    return getGameMap(0);
+  }
+
 }

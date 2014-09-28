@@ -2,6 +2,9 @@ package com.gamelabgraz.jam.tpbjg.items;
 
 import java.util.Arrays;
 
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+
 import com.gamelabgraz.jam.tpbjg.Player;
 import com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame;
 
@@ -14,9 +17,16 @@ public class MultipleItemAction implements IItemAction {
   private IItemAction[] toMultiply;
   private int count;
 
+  Sound sound = null;
+
   public MultipleItemAction(int count, IItemAction... toMultiply) {
     this.count = count;
     this.toMultiply = toMultiply;
+    try {
+      sound = new Sound("assets/sounds/switch_trap.wav");
+    } catch (SlickException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -26,21 +36,27 @@ public class MultipleItemAction implements IItemAction {
    */
   @Override
   public void startEffect(ThePeanutButterJellyGame game, Player player) {
+    if (sound != null)
+      sound.play();
     Arrays.stream(toMultiply).forEach(a -> {
-     for (int i = 0; i < count; i++) {
-      a.startEffect(game, player);
-    }});
+      for (int i = 0; i < count; i++) {
+        a.startEffect(game, player);
+      }
+    });
   }
 
   /**
    * {@inheritDoc}
-   * @see com.gamelabgraz.jam.tpbjg.items.IItemAction#endEffect(com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame, com.gamelabgraz.jam.tpbjg.Player)
+   * 
+   * @see com.gamelabgraz.jam.tpbjg.items.IItemAction#endEffect(com.gamelabgraz.jam.tpbjg.ThePeanutButterJellyGame,
+   *      com.gamelabgraz.jam.tpbjg.Player)
    */
   @Override
   public void endEffect(ThePeanutButterJellyGame game, Player effector) {
     Arrays.stream(toMultiply).forEach(a -> {
       for (int i = 0; i < count; i++) {
-       a.endEffect(game, effector);
-     }});
+        a.endEffect(game, effector);
+      }
+    });
   }
 }

@@ -9,7 +9,7 @@ import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
  *
  */
 public interface IGameMapFactory {
-  
+
   /**
    * get {@link IGameMap} by map id loaded from
    * {@link TPBJGConfig#LEVEL_FILE_DIRECTORY}
@@ -19,5 +19,7 @@ public interface IGameMapFactory {
    * @return {@link IGameMap} instance
    */
   IGameMap getGameMap(final int mapId) throws NoGameMapFoundException;
+
+  IGameMap getGameMap() throws NoGameMapFoundException;
 
 }

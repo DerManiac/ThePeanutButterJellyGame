@@ -41,6 +41,7 @@ public class Player {
   private float speed = 0.1f;
 
   private int crashCharges = 0;
+  private int bricks = 0;
 
   public Player(final GameContainer container, final ThePeanutButterJellyGame game, final FoodType type, int player,
       final boolean useGamepad) throws SlickException {
@@ -69,7 +70,6 @@ public class Player {
         moveRight(delta);
       else
         moveStop();
-
     } else {
       if (input.isKeyDown(controls.getUpButton()))
         moveUp(delta);
@@ -239,6 +239,25 @@ public class Player {
     } catch (SlickException e) {
       System.err.println("Cannot load player sprites.");
       e.printStackTrace();
+    }
+  }
+
+  public void action() {
+    if (this.bricks > 0) {
+      int x_temp = (int) (x + (size / 2)) / size;
+      int y_temp = (int) (y + (size / 2)) / size;
+      if (current == up) {
+        y_temp--;
+      } else if (current == down) {
+        y_temp++;
+      } else if (current == right) {
+        x_temp++;
+      } else if (current == left) {
+        x_temp--;
+      }
+      if (game.getGameMap().getField(x_temp, y_temp) == FieldType.EMPTY) {
+        game.getGameMap().setField(x_temp, y_temp, FieldType.WALL);
+      }
     }
   }
 

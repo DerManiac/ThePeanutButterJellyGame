@@ -70,7 +70,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setVSync(true);
 
     // Load sample map
-    gameMap = GameMapFactory.getInstance().getGameMap(0);
+    gameMap = GameMapFactory.getInstance().getGameMap();
     app.setDisplayMode(gameMap.getWidth() * GameMapRenderer.FIELD_WIDTH, gameMap.getHeight() * GameMapRenderer.FIELD_HEIGHT, false);
     gameMapRenderer = new GameMapRenderer(gameMap);
 
@@ -122,6 +122,12 @@ public class ThePeanutButterJellyGame extends BasicGame {
           System.out.println("Player " + players.indexOf(p) + " registered as gamepad " + controller);
           break;
         }
+      }
+    }
+
+    for (Player p : players) {
+      if (button == p.getControls().getActionButton()) {
+        p.action();
       }
     }
   }

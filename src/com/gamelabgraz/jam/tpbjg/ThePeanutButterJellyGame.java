@@ -60,8 +60,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
     app.setDisplayMode(gameMap.getWidth() * GameMapRenderer.FIELD_WIDTH, gameMap.getHeight() * GameMapRenderer.FIELD_HEIGHT, false);
     gameMapRenderer = new GameMapRenderer(gameMap);
 
-    Player p1 = new Player(container, this, 1, false);
-    Player p2 = new Player(container, this, 2, false);
+    Player p1 = new Player(container, this, FoodType.PEANUT, false);
+    Player p2 = new Player(container, this, FoodType.JELLY, false);
     p1.setX(gameMap.getPlayerSpawns().get(0)[0] * GameMapRenderer.FIELD_WIDTH);
     p1.setY(gameMap.getPlayerSpawns().get(0)[1] * GameMapRenderer.FIELD_HEIGHT);
     p2.setX(gameMap.getPlayerSpawns().get(1)[0] * GameMapRenderer.FIELD_WIDTH);

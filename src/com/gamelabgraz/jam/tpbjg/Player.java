@@ -28,22 +28,29 @@ public class Player {
 
   private float speed = 0.1f;
 
-  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final int player, final boolean useGamepad)
+  private final FoodType type;
+
+  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final FoodType type, final boolean useGamepad)
       throws SlickException {
-    controls = new Controls(player, useGamepad);
+    controls = new Controls(type, useGamepad);
     this.container = container;
     this.game = game;
+    this.type = type;
 
-    if (player == 1) {
+    switch (type) {
+    default:
+    case PEANUT:
       up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
       down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
       left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
       right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
-    } else {
+      break;
+    case JELLY:
       up = new Animation(new SpriteSheet("assets/graphics/jelly_nach_oben.png", 64, 64), 300);
       down = new Animation(new SpriteSheet("assets/graphics/jelly_nach_unten.png", 64, 64), 300);
       left = new Animation(new SpriteSheet("assets/graphics/jelly_nach_links.png", 64, 64), 300);
       right = new Animation(new SpriteSheet("assets/graphics/jelly_nach_rechts.png", 64, 64), 300);
+      break;
     }
     up.setAutoUpdate(false);
     down.setAutoUpdate(false);

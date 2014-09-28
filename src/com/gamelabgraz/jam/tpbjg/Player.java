@@ -202,6 +202,7 @@ public class Player {
    *          the speed to set
    */
   public void setSpeed(float speed) {
+    System.out.println("Set speed from " + this.speed + " to " + speed);
     this.speed = speed;
   }
 

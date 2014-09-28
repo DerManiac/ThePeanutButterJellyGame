@@ -36,11 +36,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int playerWon = -1;
 
-  private static final int P1_START_X = 0;
-  private static final int P1_START_Y = 0;
-  private static final int P2_START_X = 500;
-  private static final int P2_START_Y = 500;
-
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
     this.itemEffectHandler = new ItemEffectHandler(this);
@@ -49,9 +44,9 @@ public class ThePeanutButterJellyGame extends BasicGame {
   @Override
   public void render(GameContainer container, Graphics graphics) throws SlickException {
     gameMapRenderer.render();
-    players.forEach(Player::render);
     gameMap.getItemsOnMap().forEach(i -> i.render());
     players.forEach(Player::renderGlass);
+    players.forEach(Player::render);
 
     if (playerWon != -1) {
       graphics.setFont(new TrueTypeFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 48), true));
@@ -85,14 +80,13 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
     Sound bgmusic = new Sound("assets/sounds/theme1.wav");
     bgmusic.loop();
-
   }
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
     if (playerWon == -1) {
       itemEffectHandler.processDelta(delta);
-      players.forEach(p -> p.move(delta));
+      players.forEach(p -> p.update(delta));
 
       itemSpawnTimer += delta;
       if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
@@ -122,12 +116,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
           System.out.println("Player " + players.indexOf(p) + " registered as gamepad " + controller);
           break;
         }
-      }
-    }
-
-    for (Player p : players) {
-      if (button == p.getControls().getActionButton()) {
-        p.action();
       }
     }
   }

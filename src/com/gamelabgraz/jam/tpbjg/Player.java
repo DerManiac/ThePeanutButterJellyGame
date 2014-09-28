@@ -58,8 +58,10 @@ public class Player {
     current = down;
   }
 
-  public void move(final int delta) {
+  public void update(final int delta) {
     final Input input = container.getInput();
+    final float x_orig = x;
+    final float y_orig = y;
     if (controls.isUseGamepad()) {
       final int gamepadNumber = controls.getGamepadNumber();
       if (input.isControllerUp(gamepadNumber))
@@ -72,6 +74,9 @@ public class Player {
         moveRight(delta);
       else
         moveStop();
+      if (input.isControlPressed(controls.getActionButton()))
+        action();
+
     } else {
       if (input.isKeyDown(controls.getUpButton()))
         moveUp(delta);
@@ -83,84 +88,36 @@ public class Player {
         moveRight(delta);
       else
         moveStop();
+      if (input.isKeyDown(controls.getActionButton()))
+        action();
     }
-
-    checkPosition();
+    checkLine(x_orig, y_orig, x, y);
   }
 
   private void moveUp(final int delta) {
-
-    float y_delta = (delta * speed);
-    float y_temp = y - y_delta;
-    if (isCollition(x, y_temp)) {
-      while (y_delta > 0.1f) {
-        y_delta /= 2;
-        if (isCollition(x, y_temp))
-          y_temp += y_delta;
-        else
-          y_temp -= y_delta;
-      }
-      if (isCollition(x, y_temp))
-        return;
-    }
-    y = y_temp;
+    float dy = -delta * speed;
+    y = getMaxMoveDistanceY(dy);
     current = up;
     current.update(delta);
   }
 
   private void moveDown(final int delta) {
-    float y_delta = (delta * speed);
-    float y_temp = y + y_delta;
-    if (isCollition(x, y_temp)) {
-      while (y_delta > 0.1f) {
-        y_delta /= 2;
-        if (isCollition(x, y_temp))
-          y_temp -= y_delta;
-        else
-          y_temp += y_delta;
-      }
-      if (isCollition(x, y_temp))
-        return;
-    }
-    y = y_temp;
+    float dy = delta * speed;
+    y = getMaxMoveDistanceY(dy);
     current = down;
     current.update(delta);
   }
 
   private void moveLeft(final int delta) {
-    float x_delta = (delta * speed);
-    float x_temp = x - x_delta;
-    if (isCollition(x_temp, y)) {
-      while (x_delta > 0.1f) {
-        x_delta /= 2;
-        if (isCollition(x_temp, y))
-          x_temp += x_delta;
-        else
-          x_temp -= x_delta;
-      }
-      if (isCollition(x_temp, y))
-        return;
-    }
-    x = x_temp;
+    float dx = -delta * speed;
+    x = getMaxMoveDistanceX(dx);
     current = left;
     current.update(delta);
   }
 
   private void moveRight(final int delta) {
-    float x_delta = (delta * speed);
-    float x_temp = x + x_delta;
-    if (isCollition(x_temp, y)) {
-      while (x_delta > 0.1f) {
-        x_delta /= 2;
-        if (isCollition(x_temp, y))
-          x_temp -= x_delta;
-        else
-          x_temp += x_delta;
-      }
-      if (isCollition(x_temp, y))
-        return;
-    }
-    x = x_temp;
+    float dx = delta * speed;
+    x = getMaxMoveDistanceX(dx);
     current = right;
     current.update(delta);
   }
@@ -259,6 +216,7 @@ public class Player {
       }
       if (game.getGameMap().getField(x_temp, y_temp) == FieldType.EMPTY) {
         game.getGameMap().setField(x_temp, y_temp, FieldType.WALL);
+        bricks--;
         try {
           new Sound("assets/sounds/build_wall.wav").play();
         } catch (SlickException e) {
@@ -307,16 +265,29 @@ public class Player {
     crashCharges = Math.max(crashCharges - 1, 0);
   }
 
-  private boolean isCollition(float x, float y) {
-
+  private boolean isScreenCollition(final float x, final float y) {
     if (x < 0 || y < 0 || (x + size) > container.getWidth() || (y + size) > container.getHeight())
       return true;
 
-    for (Player p : game.getPlayers()) {
-      if (p != this && x < p.getX() + size - 1 && x + size - 1 > p.getX() && y < p.getY() + size - 1 && size - 1 + y > p.getY())
-        return true;
-    }
+    return false;
+  }
 
+  /**
+   * checks for collition between this player and other players
+   * 
+   * @param x
+   * @param y
+   * @return the collided player or null if no player is on this position
+   */
+  private Player playerCollition(final float x, final float y) {
+    for (Player p : game.getPlayers()) {
+      if (p != this && x < p.getX() + size && x + size > p.getX() && y < p.getY() + size && size + y > p.getY())
+        return p;
+    }
+    return null;
+  }
+
+  private boolean isWorldCollition(final float x, final float y) {
     if (game.getGameMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY) {
       if (crashCharges > 0) {
         game.getGameMap().setField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size, FieldType.EMPTY);
@@ -330,17 +301,81 @@ public class Player {
       }
       return true;
     }
-
     return false;
   }
 
-  private void checkPosition() {
-    final int x_temp = (int) (x + (size / 2)) / size;
-    final int y_temp = (int) (y + (size / 2)) / size;
-    ArrayList<Item> temp = new ArrayList<>(game.getGameMap().getItemsOnMap());
+  private float getMaxMoveDistanceX(final float dx_desired) {
+    float dx = 0;
+    final float distance = (dx_desired > 0 ? size : -size) / 2;
 
-    temp.forEach(i -> {
-      if (i.getX() == x_temp && i.getY() == y_temp) {
+    for (int i = 1; dx != dx_desired; i++) {
+      dx = i * distance;
+
+      if (dx_desired > 0 ? dx > dx_desired : dx < dx_desired)
+        dx = dx_desired;
+
+      if (isScreenCollition(x + dx, y)) {
+        System.out.println("screen: " + x + dx);
+        return dx_desired > 0 ? container.getWidth() - size : 0;
+      }
+
+      final Player p;
+      if ((p = playerCollition(x + dx, y)) != null) {
+        System.out.println("player: " + x + dx);
+        return dx_desired > 0 ? p.getX() - size : p.getX() + size;
+      }
+
+      if (isWorldCollition(x + dx, y)) {
+        System.out.println("world: " + x + dx);
+        final float x_temp = x + dx + (size / 2);
+        return dx_desired > 0 ? (((int) x_temp) / size) * (float) size - (size / 2) - 0.1f : (((int) x_temp) / size) * (float) size
+            + (size / 2) + 0.1f;
+      }
+    }
+    return x + dx;
+  }
+
+  private float getMaxMoveDistanceY(final float dy_desired) {
+    float dy = 0;
+    final float distance = (dy_desired > 0 ? size : -size) / 2;
+
+    for (int i = 1; dy != dy_desired; i++) {
+      dy = i * distance;
+
+      if (dy_desired > 0 ? dy > dy_desired : dy < dy_desired)
+        dy = dy_desired;
+
+      if (isScreenCollition(x, y + dy)) {
+        return dy_desired > 0 ? container.getHeight() - size : 0;
+      }
+
+      final Player p;
+      if ((p = playerCollition(x, y + dy)) != null) {
+        return dy_desired > 0 ? p.getY() - size : p.getY() + size;
+      }
+
+      if (isWorldCollition(x, y + dy)) {
+        final float y_temp = y + dy + (size / 2);
+        return dy_desired > 0 ? (((int) y_temp) / size) * (float) size - (size / 2) - 0.1f : (((int) y_temp) / size) * (float) size
+            + (size / 2) + 0.1f;
+      }
+    }
+    return y + dy;
+  }
+
+  private void checkLine(final float x1, final float y1, final float x2, final float y2) {
+    final int x1_temp = (int) (x1 + (size / 2)) / size;
+    final int y1_temp = (int) (y1 + (size / 2)) / size;
+    final int x2_temp = (int) (x2 + (size / 2)) / size;
+    final int y2_temp = (int) (y2 + (size / 2)) / size;
+
+    ArrayList<Item> tempItems = new ArrayList<>(game.getGameMap().getItemsOnMap());
+
+    tempItems.forEach(i -> {
+      final int ix = i.getX();
+      final int iy = i.getY();
+      if (((ix >= x1_temp && ix <= x2_temp) || (ix <= x1_temp && ix >= x2_temp))
+          && ((iy >= y1_temp && iy <= y2_temp) || (iy <= y1_temp && iy >= y2_temp))) {
         i.processEffect(game, this);
         Arrays.stream(i.getType().getItemActions()).forEach(
             ii -> game.getItemEffectHandler().registerEffect(ii, this, i.getType().getDuration()));
@@ -352,7 +387,8 @@ public class Player {
       for (int i = 0; i < game.getPlayers().size(); i++) {
         if (i != player - 1) {
           int[] other_base_coordinates = game.getGameMap().getPlayerGlassSpawns().get(i);
-          if (x_temp == other_base_coordinates[0] && y_temp == other_base_coordinates[1]) {
+          if (((other_base_coordinates[0] >= x1_temp && other_base_coordinates[0] <= x2_temp) || (other_base_coordinates[0] <= x1_temp && other_base_coordinates[0] >= x2_temp))
+              && ((other_base_coordinates[1] >= y1_temp && other_base_coordinates[1] <= y2_temp) || (other_base_coordinates[1] <= y1_temp && other_base_coordinates[1] >= y2_temp))) {
             // we got a glass
             game.getPlayers().get(i).lostLife();
             carriesGlass = true;
@@ -363,7 +399,8 @@ public class Player {
     } else {
       // check if we are on our own bread
       int[] bread_coordinates = game.getGameMap().getPlayerSpawns().get(player - 1);
-      if (x_temp == bread_coordinates[0] && y_temp == bread_coordinates[1]) {
+      if (((bread_coordinates[0] >= x1_temp && bread_coordinates[0] <= x2_temp) || (bread_coordinates[0] <= x1_temp && bread_coordinates[0] >= x2_temp))
+          && ((bread_coordinates[1] >= y1_temp && bread_coordinates[1] <= y2_temp) || (bread_coordinates[1] <= y1_temp && bread_coordinates[1] >= y2_temp))) {
         // we dropped the glass
         carriesGlass = false;
         updatePlayerSprites();

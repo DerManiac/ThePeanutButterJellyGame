@@ -88,7 +88,7 @@ public class Player {
         moveRight(delta);
       else
         moveStop();
-      if (input.isControlPressed(controls.getActionButton()))
+      if (input.isButtonPressed(controls.getActionButton() - 1, controls.getGamepadNumber()))
         action();
 
     } else {
@@ -228,13 +228,15 @@ public class Player {
       } else if (current == left) {
         x_temp--;
       }
-      if (game.getGameMap().getField(x_temp, y_temp) == FieldType.EMPTY) {
-        game.getGameMap().setField(x_temp, y_temp, FieldType.WALL);
-        bricks--;
-        try {
-          new Sound("assets/sounds/build_wall.wav").play();
-        } catch (SlickException e) {
-          e.printStackTrace();
+      if (x_temp >= 0 && y_temp >= 0 && x_temp < game.getGameMap().getWidth() && y_temp < game.getGameMap().getHeight()) {
+        if (game.getGameMap().getField(x_temp, y_temp) == FieldType.EMPTY) {
+          game.getGameMap().setField(x_temp, y_temp, FieldType.WALL);
+          bricks--;
+          try {
+            new Sound("assets/sounds/build_wall.wav").play();
+          } catch (SlickException e) {
+            e.printStackTrace();
+          }
         }
       }
     }
@@ -277,6 +279,10 @@ public class Player {
 
   public void removeCrashCharge() {
     crashCharges = Math.max(crashCharges - 1, 0);
+  }
+
+  public void removeBricks() {
+    bricks = Math.max(bricks - 1, 0);
   }
 
   private boolean isScreenCollition(final float x, final float y) {

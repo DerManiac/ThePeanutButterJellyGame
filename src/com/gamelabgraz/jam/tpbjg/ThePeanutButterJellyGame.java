@@ -1,5 +1,6 @@
 package com.gamelabgraz.jam.tpbjg;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +37,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private Player winner = null;
 
+  private TrueTypeFont menufont;
+
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
     this.itemEffectHandler = new ItemEffectHandler(this);
@@ -49,13 +52,18 @@ public class ThePeanutButterJellyGame extends BasicGame {
     players.forEach(Player::render);
 
     int position = 10;
-    final int offset = 15;
+    final int offset = 30;
+    int x_offset = 0;
 
+    graphics.setFont(menufont);
     for (Player p : players) {
-      graphics.drawString(p.getType().getName(), 10, position += offset);
-      graphics.drawString("charges: " + p.getCrashCharges(), 10, position += offset);
-      graphics.drawString("bricks: " + p.getBricks(), 10, position += offset);
-      position += offset;
+      if (container.getInput().isButtonPressed(1, p.getControls().getGamepadNumber())) {
+        position = 10;
+        graphics.drawString(p.getType().getName(), 20 + x_offset, position += offset);
+        graphics.drawString("charges: " + p.getCrashCharges(), 20 + x_offset, position += offset);
+        graphics.drawString("bricks: " + p.getBricks(), 20 + x_offset, position += offset);
+        x_offset += 300;
+      }
     }
 
     if (winner != null) {
@@ -69,6 +77,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
     container.setMaximumLogicUpdateInterval(gameSpeed);
     container.setMinimumLogicUpdateInterval(gameSpeed);
     container.setVSync(true);
+
+    menufont = new TrueTypeFont(new Font("Arial", Font.BOLD, 28), false);
 
     // Load sample map
     gameMap = GameMapFactory.getInstance().getGameMap();

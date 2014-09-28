@@ -30,7 +30,7 @@ public class MagnetAction implements IItemAction {
       sound.play();
     for (Player p : game.getPlayers()) {
       if (p != player) {
-        p.removeCrashCharge();
+        p.removeBricks();
 
       }
     }

@@ -377,7 +377,7 @@
 <field x="23" y="14" type="EMPTY"/>
 <field x="24" y="14" type="WALL"/>
 </fields>
-<items><item x="2" y="28" type="COMET"/><item x="5" y="14" type="FREEZE"/><item x="8" y="22" type="MAGNET"/><item x="9" y="19" type="TRAPTRAP"/><item x="18" y="29" type="COMET"/><item x="12" y="19" type="TRAPTRAP"/><item x="13" y="4" type="COMET"/><item x="0" y="9" type="FREEZE"/><item x="8" y="26" type="FREEZE"/><item x="18" y="20" type="TRAPTRAP"/></items>
+<items><item x="11" y="9" type="TRAPTRAP"/><item x="13" y="9" type="TRAPTRAP"/><item x="13" y="8" type="COMET"/></items>
 <spawns>
 <spawn player="0" x="0" y="7" glassX="0" glassY="8"/>
 <spawn player="1" x="24" y="7"  glassX="24" glassY="8"/>

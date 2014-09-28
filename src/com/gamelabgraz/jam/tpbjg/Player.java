@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 import com.gamelabgraz.jam.tpbjg.config.TPBJGConfig;
@@ -290,6 +291,11 @@ public class Player {
       if (crashCharges > 0) {
         game.getGameMap().setField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size, FieldType.EMPTY);
         crashCharges--;
+        try {
+          new Sound("assets/sounds/wall_crash.wav").play();
+        } catch (SlickException e) {
+          e.printStackTrace();
+        }
         return false;
       }
       return true;

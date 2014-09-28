@@ -9,6 +9,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 
 import at.chrl.nutils.Rnd;
@@ -81,6 +82,9 @@ public class ThePeanutButterJellyGame extends BasicGame {
     p2.setY(gameMap.getPlayerSpawns().get(1)[1] * GameMapRenderer.FIELD_HEIGHT);
     players.add(p1);
     players.add(p2);
+
+    Sound bgmusic = new Sound("assets/sounds/theme1.wav");
+    bgmusic.loop();
 
   }
 

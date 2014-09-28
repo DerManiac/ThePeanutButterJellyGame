@@ -34,7 +34,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int itemSpawnTimer;
 
-  private int playerWon = -1;
+  private Player winner = null;
 
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
@@ -48,13 +48,19 @@ public class ThePeanutButterJellyGame extends BasicGame {
     players.forEach(Player::renderGlass);
     players.forEach(Player::render);
 
-    if (playerWon != -1) {
+    int position = 10;
+    final int offset = 15;
+
+    for (Player p : players) {
+      graphics.drawString(p.getType().getName(), 10, position += offset);
+      graphics.drawString("charges: " + p.getCrashCharges(), 10, position += offset);
+      graphics.drawString("bricks: " + p.getBricks(), 10, position += offset);
+      position += offset;
+    }
+
+    if (winner != null) {
       graphics.setFont(new TrueTypeFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 48), true));
-      String name = "Peanut butter";
-      if (playerWon == 2) {
-        name = "Jelly";
-      }
-      graphics.drawString(name + " WON!", app.getWidth() / 2 - 150, app.getHeight() / 2 - 100);
+      graphics.drawString(winner.getType().getName() + " WON!", app.getWidth() / 2 - 150, app.getHeight() / 2 - 100);
     }
   }
 
@@ -84,7 +90,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
-    if (playerWon == -1) {
+    if (winner == null) {
       itemEffectHandler.processDelta(delta);
       players.forEach(p -> p.update(delta));
 
@@ -124,8 +130,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
     return players;
   }
 
-  public void setPlayerWon(int player) {
-    this.playerWon = player;
+  public void setPlayerWon(Player player) {
+    winner = player;
   }
 
   public IGameMap getGameMap() {

@@ -6,6 +6,21 @@ package com.gamelabgraz.jam.tpbjg;
  */
 public enum FoodType {
 
-  JELLY, PEANUT;
+  JELLY("Jelly"), PEANUT("Peanut butter");
 
+  private String name;
+
+  /**
+   * 
+   */
+  private FoodType(String name) {
+    this.name = name;
+  }
+
+  /**
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
 }

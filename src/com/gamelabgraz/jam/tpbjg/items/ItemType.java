@@ -24,7 +24,7 @@ import com.gamelabgraz.jam.tpbjg.items.implementation.TrapAction;
 public enum ItemType {
   COMET(false, "assets/graphics/comet.png", 64, 64, 5000, new CometAction()), //
   EARTH(false, "assets/graphics/planet.png", 64, 64, 5000, new EarthAction()), //
-  MAGNET(false, "assets/graphics/magnet.png", 64, 64, 0, new MagnetAction()), //
+  MAGNET(false, "assets/graphics/magnet_single.png", 64, 64, 0, new MagnetAction()), //
 
   // Trap trigger
   TRAP(true, "assets/graphics/baseflag.png", 64, 64, 0, new TrapAction()),

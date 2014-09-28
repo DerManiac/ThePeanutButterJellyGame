@@ -1,5 +1,8 @@
 package com.gamelabgraz.jam.tpbjg.map.renderer;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import com.gamelabgraz.jam.tpbjg.map.IGameMap;
 
 public class GameMapRenderer {
@@ -19,6 +22,15 @@ public class GameMapRenderer {
       type.getBackground().draw(x * FIELD_WIDTH, y * FIELD_HEIGHT);
     });
 
-  }
+    try {
+      int[] spawn = map.getPlayerSpawns().get(0);
+      new Image("assets/graphics/toast_peanutbutter.png").draw(spawn[0] * FIELD_WIDTH, spawn[1] * FIELD_HEIGHT);
+      spawn = map.getPlayerSpawns().get(1);
+      new Image("assets/graphics/toast_jelly.png").draw(spawn[0] * FIELD_WIDTH, spawn[1] * FIELD_HEIGHT);
+    } catch (SlickException e) {
+      System.err.println("Cannot render base image");
+      e.printStackTrace();
+    }
 
+  }
 }

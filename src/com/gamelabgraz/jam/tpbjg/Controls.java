@@ -54,6 +54,9 @@ public class Controls {
 
   public void setUseGamepad(boolean useGamepad) {
     this.useGamepad = useGamepad;
+    if (useGamepad) {
+      actionButton = 1; // space
+    }
   }
 
   public int getUpButton() {

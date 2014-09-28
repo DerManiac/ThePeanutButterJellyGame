@@ -31,6 +31,7 @@ public class Player {
   private int lives;
 
   private int player;
+  private FoodType type;
 
   private boolean carriesGlass = false;
 
@@ -49,6 +50,7 @@ public class Player {
     this.container = container;
     this.game = game;
     this.player = player;
+    this.type = type;
     updatePlayerSprites();
 
     setLives(TPBJGConfig.PLAYER_LIVES);
@@ -257,6 +259,11 @@ public class Player {
       }
       if (game.getGameMap().getField(x_temp, y_temp) == FieldType.EMPTY) {
         game.getGameMap().setField(x_temp, y_temp, FieldType.WALL);
+        try {
+          new Sound("assets/sounds/build_wall.wav").play();
+        } catch (SlickException e) {
+          e.printStackTrace();
+        }
       }
     }
   }
@@ -290,6 +297,10 @@ public class Player {
 
   public void addCrashCharge() {
     crashCharges++;
+  }
+
+  public void addBrick() {
+    bricks++;
   }
 
   public void removeCrashCharge() {
@@ -363,5 +374,9 @@ public class Player {
         }
       }
     }
+  }
+
+  public FoodType getType() {
+    return type;
   }
 }

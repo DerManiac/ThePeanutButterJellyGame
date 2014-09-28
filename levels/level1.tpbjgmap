@@ -380,6 +380,6 @@
 <items><item x="11" y="9" type="TRAPTRAP"/><item x="13" y="9" type="TRAPTRAP"/><item x="13" y="8" type="COMET"/></items>
 <spawns>
 <spawn player="0" x="0" y="7" glassX="0" glassY="8"/>
-<spawn player="1" x="24" y="7"  glassX="24" glassY="8"/>
+<spawn player="1" x="24" y="7"  glassX="0" glassY="9"/>
 </spawns>
 </gameMap>

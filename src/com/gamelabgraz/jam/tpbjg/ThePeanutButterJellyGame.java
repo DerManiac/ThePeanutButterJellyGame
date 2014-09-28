@@ -9,6 +9,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 
 import at.chrl.nutils.Rnd;
 
@@ -32,6 +33,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int itemSpawnTimer;
 
+  private int playerWon = -1;
+
   private static final int P1_START_X = 0;
   private static final int P1_START_Y = 0;
   private static final int P2_START_X = 500;
@@ -48,6 +51,15 @@ public class ThePeanutButterJellyGame extends BasicGame {
     players.forEach(Player::render);
     gameMap.getItemsOnMap().forEach(i -> i.render());
     players.forEach(Player::renderGlass);
+
+    if (playerWon != -1) {
+      graphics.setFont(new TrueTypeFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 48), true));
+      String name = "Peanut butter";
+      if (playerWon == 2) {
+        name = "Jelly";
+      }
+      graphics.drawString(name + " WON!", app.getWidth() / 2 - 150, app.getHeight() / 2 - 100);
+    }
   }
 
   @Override
@@ -74,20 +86,22 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   @Override
   public void update(GameContainer container, int delta) throws SlickException {
-    itemEffectHandler.processDelta(delta);
-    players.forEach(p -> p.move(delta));
+    if (playerWon == -1) {
+      itemEffectHandler.processDelta(delta);
+      players.forEach(p -> p.move(delta));
 
-    itemSpawnTimer += delta;
-    if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
-      itemSpawnTimer = 0;
-      Item itemToAdd = null;
-      if (Rnd.nextBoolean())
-        itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
-      else
-        itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
-      if (Objects.nonNull(itemToAdd))
-        ;
-      this.gameMap.getItemsOnMap().add(itemToAdd);
+      itemSpawnTimer += delta;
+      if (itemSpawnTimer > TPBJGConfig.ITEM_SPAWN_TIME) {
+        itemSpawnTimer = 0;
+        Item itemToAdd = null;
+        if (Rnd.nextBoolean())
+          itemToAdd = ItemGenerator.getInstance().generateRandomItem(this.gameMap);
+        else
+          itemToAdd = ItemGenerator.getInstance().generateRandomStartItem(this.gameMap);
+        if (Objects.nonNull(itemToAdd))
+          ;
+        this.gameMap.getItemsOnMap().add(itemToAdd);
+      }
     }
   }
 
@@ -110,6 +124,10 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   public List<Player> getPlayers() {
     return players;
+  }
+
+  public void setPlayerWon(int player) {
+    this.playerWon = player;
   }
 
   public IGameMap getGameMap() {

@@ -331,6 +331,11 @@ public class Player {
         // we dropped the glass
         carriesGlass = false;
         updatePlayerSprites();
+        for (Player p : game.getPlayers()) {
+          if (p != this && p.lives == 1) {
+            game.setPlayerWon(player);
+          }
+        }
       }
     }
   }

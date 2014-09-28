@@ -216,6 +216,7 @@ public class Player {
       }
       if (game.getGameMap().getField(x_temp, y_temp) == FieldType.EMPTY) {
         game.getGameMap().setField(x_temp, y_temp, FieldType.WALL);
+        bricks--;
         try {
           new Sound("assets/sounds/build_wall.wav").play();
         } catch (SlickException e) {

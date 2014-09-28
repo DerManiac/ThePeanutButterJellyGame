@@ -118,12 +118,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
         }
       }
     }
-
-    for (Player p : players) {
-      if (button == p.getControls().getActionButton()) {
-        p.action();
-      }
-    }
   }
 
   public List<Player> getPlayers() {

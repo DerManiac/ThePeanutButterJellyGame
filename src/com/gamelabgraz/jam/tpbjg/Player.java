@@ -39,13 +39,12 @@ public class Player {
 
   private float speed = 0.1f;
 
-  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final int player, final boolean useGamepad)
-      throws SlickException {
-    controls = new Controls(player, useGamepad);
+  public Player(final GameContainer container, final ThePeanutButterJellyGame game, final FoodType type, int player,
+      final boolean useGamepad) throws SlickException {
+    controls = new Controls(type, useGamepad);
     this.container = container;
     this.game = game;
     this.player = player;
-
     updatePlayerSprites();
 
     setLives(TPBJGConfig.PLAYER_LIVES);
@@ -126,7 +125,7 @@ public class Player {
   private void moveLeft(final int delta) {
     float x_delta = (delta * speed);
     float x_temp = x - x_delta;
-    if (isCollition(x_temp, x)) {
+    if (isCollition(x_temp, y)) {
       while (x_delta > 0.1f) {
         x_delta /= 2;
         if (isCollition(x_temp, y))
@@ -145,7 +144,7 @@ public class Player {
   private void moveRight(final int delta) {
     float x_delta = (delta * speed);
     float x_temp = x + x_delta;
-    if (isCollition(x_temp, x)) {
+    if (isCollition(x_temp, y)) {
       while (x_delta > 0.1f) {
         x_delta /= 2;
         if (isCollition(x_temp, y))
@@ -201,24 +200,43 @@ public class Player {
     return speed;
   }
 
-  private void updatePlayerSprites() throws SlickException {
-    if (player == 1) {
-      up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
-      down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
-      left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
-      right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
-      glassSpritesheet = new SpriteSheet("assets/graphics/peanutbutter_glass_tiled.png", 64, 64);
-    } else {
-      up = new Animation(new SpriteSheet("assets/graphics/jelly_nach_oben.png", 64, 64), 300);
-      down = new Animation(new SpriteSheet("assets/graphics/jelly_nach_unten.png", 64, 64), 300);
-      left = new Animation(new SpriteSheet("assets/graphics/jelly_nach_links.png", 64, 64), 300);
-      right = new Animation(new SpriteSheet("assets/graphics/jelly_nach_rechts.png", 64, 64), 300);
-      glassSpritesheet = new SpriteSheet("assets/graphics/jelly_glass_tiled.png", 64, 64);
+  private void updatePlayerSprites() {
+    try {
+      if (player == 1) {
+        if (carriesGlass) {
+          up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben_glass.png", 64, 64), 300);
+          down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten_glass.png", 64, 64), 300);
+          left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links_glass.png", 64, 64), 300);
+          right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts_glass.png", 64, 64), 300);
+        } else {
+          up = new Animation(new SpriteSheet("assets/graphics/peanut_nach_oben.png", 64, 64), 300);
+          down = new Animation(new SpriteSheet("assets/graphics/peanut_nach_unten.png", 64, 64), 300);
+          left = new Animation(new SpriteSheet("assets/graphics/peanut_nach_links.png", 64, 64), 300);
+          right = new Animation(new SpriteSheet("assets/graphics/peanut_nach_rechts.png", 64, 64), 300);
+        }
+        glassSpritesheet = new SpriteSheet("assets/graphics/peanutbutter_glass_tiled.png", 64, 64);
+      } else {
+        if (carriesGlass) {
+          up = new Animation(new SpriteSheet("assets/graphics/jelly_nach_oben_glass.png", 64, 64), 300);
+          down = new Animation(new SpriteSheet("assets/graphics/jelly_nach_unten_glass.png", 64, 64), 300);
+          left = new Animation(new SpriteSheet("assets/graphics/jelly_nach_links_glass.png", 64, 64), 300);
+          right = new Animation(new SpriteSheet("assets/graphics/jelly_nach_rechts_glass.png", 64, 64), 300);
+        } else {
+          up = new Animation(new SpriteSheet("assets/graphics/jelly_nach_oben.png", 64, 64), 300);
+          down = new Animation(new SpriteSheet("assets/graphics/jelly_nach_unten.png", 64, 64), 300);
+          left = new Animation(new SpriteSheet("assets/graphics/jelly_nach_links.png", 64, 64), 300);
+          right = new Animation(new SpriteSheet("assets/graphics/jelly_nach_rechts.png", 64, 64), 300);
+        }
+        glassSpritesheet = new SpriteSheet("assets/graphics/jelly_glass_tiled.png", 64, 64);
+      }
+      up.setAutoUpdate(false);
+      down.setAutoUpdate(false);
+      left.setAutoUpdate(false);
+      right.setAutoUpdate(false);
+    } catch (SlickException e) {
+      System.err.println("Cannot load player sprites.");
+      e.printStackTrace();
     }
-    up.setAutoUpdate(false);
-    down.setAutoUpdate(false);
-    left.setAutoUpdate(false);
-    right.setAutoUpdate(false);
   }
 
   /**
@@ -282,23 +300,21 @@ public class Player {
       for (int i = 0; i < game.getPlayers().size(); i++) {
         if (i != player - 1) {
           int[] other_base_coordinates = game.getGameMap().getPlayerGlassSpawns().get(i);
-          int p2_X_temp = (int) (other_base_coordinates[0] + (size / 2)) / size;
-          int p2_Y_temp = (int) (other_base_coordinates[1] + (size / 2)) / size;
-          if (x_temp == p2_X_temp && y_temp == p2_Y_temp) {
+          if (x_temp == other_base_coordinates[0] && y_temp == other_base_coordinates[1]) {
             // we got a glass
             game.getPlayers().get(i).lostLife();
             carriesGlass = true;
+            updatePlayerSprites();
           }
         }
       }
     } else {
       // check if we are on our own bread
       int[] bread_coordinates = game.getGameMap().getPlayerSpawns().get(player - 1);
-      int bread_X_temp = (int) (bread_coordinates[0] + (size / 2)) / size;
-      int bread_Y_temp = (int) (bread_coordinates[1] + (size / 2)) / size;
-      if (x_temp == bread_X_temp && y_temp == bread_Y_temp) {
+      if (x_temp == bread_coordinates[0] && y_temp == bread_coordinates[1]) {
         // we dropped the glass
         carriesGlass = false;
+        updatePlayerSprites();
       }
     }
   }

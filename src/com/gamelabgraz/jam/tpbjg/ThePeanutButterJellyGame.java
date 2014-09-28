@@ -32,11 +32,6 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
   private int itemSpawnTimer;
 
-  private static final int P1_START_X = 0;
-  private static final int P1_START_Y = 0;
-  private static final int P2_START_X = 500;
-  private static final int P2_START_Y = 500;
-
   public ThePeanutButterJellyGame() {
     super("The Peanut Butter Jelly Game");
     this.itemEffectHandler = new ItemEffectHandler(this);

@@ -292,20 +292,21 @@ public class Player {
     return false;
   }
 
-  /**
-   * checks for collition between this player and other players
-   * 
-   * @param x
-   * @param y
-   * @return the collided player or null if no player is on this position
-   */
-  private Player playerCollition(final float x, final float y) {
-    for (Player p : game.getPlayers()) {
-      if (p != this && x < p.getX() + size && x + size > p.getX() && y < p.getY() + size && size + y > p.getY())
-        return p;
-    }
-    return null;
-  }
+  // /**
+  // * checks for collition between this player and other players
+  // *
+  // * @param x
+  // * @param y
+  // * @return the collided player or null if no player is on this position
+  // */
+  // private Player playerCollition(final float x, final float y) {
+  // for (Player p : game.getPlayers()) {
+  // if (p != this && x < p.getX() + size && x + size > p.getX() && y < p.getY()
+  // + size && size + y > p.getY())
+  // return p;
+  // }
+  // return null;
+  // }
 
   private boolean isWorldCollition(final float x, final float y) {
     if (game.getGameMap().getField((int) (x + (size / 2)) / size, (int) (y + (size / 2)) / size) != FieldType.EMPTY) {
@@ -339,11 +340,11 @@ public class Player {
         return dx_desired > 0 ? container.getWidth() - size : 0;
       }
 
-      final Player p;
-      if ((p = playerCollition(x + dx, y)) != null) {
-        System.out.println("player: " + x + dx);
-        return dx_desired > 0 ? p.getX() - size : p.getX() + size;
-      }
+      // final Player p;
+      // if ((p = playerCollition(x + dx, y)) != null) {
+      // System.out.println("player: " + x + dx);
+      // return dx_desired > 0 ? p.getX() - size : p.getX() + size;
+      // }
 
       if (isWorldCollition(x + dx, y)) {
         System.out.println("world: " + x + dx);
@@ -369,10 +370,10 @@ public class Player {
         return dy_desired > 0 ? container.getHeight() - size : 0;
       }
 
-      final Player p;
-      if ((p = playerCollition(x, y + dy)) != null) {
-        return dy_desired > 0 ? p.getY() - size : p.getY() + size;
-      }
+      // final Player p;
+      // if ((p = playerCollition(x, y + dy)) != null) {
+      // return dy_desired > 0 ? p.getY() - size : p.getY() + size;
+      // }
 
       if (isWorldCollition(x, y + dy)) {
         final float y_temp = y + dy + (size / 2);

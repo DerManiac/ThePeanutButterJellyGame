@@ -57,7 +57,8 @@ public class ThePeanutButterJellyGame extends BasicGame {
 
     graphics.setFont(menufont);
     for (Player p : players) {
-      if (container.getInput().isButtonPressed(1, p.getControls().getGamepadNumber())) {
+      if (p.getControls().isUseGamepad() ? container.getInput().isButtonPressed(p.getControls().getStatusButton() - 1,
+          p.getControls().getGamepadNumber()) : container.getInput().isKeyDown(p.getControls().getStatusButton())) {
         position = 10;
         graphics.drawString(p.getType().getName(), 20 + x_offset, position += offset);
         graphics.drawString("charges: " + p.getCrashCharges(), 20 + x_offset, position += offset);

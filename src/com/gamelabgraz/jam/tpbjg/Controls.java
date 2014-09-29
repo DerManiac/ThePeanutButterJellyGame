@@ -1,5 +1,7 @@
 package com.gamelabgraz.jam.tpbjg;
 
+import org.newdawn.slick.Input;
+
 public class Controls {
 
   public static final int GAMEPAD_START = 8;
@@ -12,6 +14,7 @@ public class Controls {
   private int leftButton;
   private int rightButton;
   private int actionButton;
+  private int statusButton;
 
   private int gamepadNumber;
 
@@ -25,11 +28,14 @@ public class Controls {
     if (useGamepad) {
       this.useGamepad = useGamepad;
       actionButton = 1;
+      statusButton = 2;
     } else {
       if (type == FoodType.PEANUT) {
         actionButton = 57; // space
+        statusButton = Input.KEY_LSHIFT;
       } else {
         actionButton = 28; // enter
+        statusButton = Input.KEY_RSHIFT;
       }
     }
 
@@ -46,6 +52,13 @@ public class Controls {
       rightButton = 205; // arrow right
     }
 
+  }
+
+  /**
+   * @return the statusButton
+   */
+  public int getStatusButton() {
+    return statusButton;
   }
 
   public boolean isUseGamepad() {

@@ -82,7 +82,7 @@ public class ThePeanutButterJellyGame extends BasicGame {
     menufont = new TrueTypeFont(new Font("Arial", Font.BOLD, 28), false);
 
     // Load sample map
-    gameMap = GameMapFactory.getInstance().getGameMap();
+    gameMap = GameMapFactory.getInstance().getGameMap(4);
     app.setDisplayMode(gameMap.getWidth() * GameMapRenderer.FIELD_WIDTH, gameMap.getHeight() * GameMapRenderer.FIELD_HEIGHT, false);
     gameMapRenderer = new GameMapRenderer(gameMap);
 

@@ -1,0 +1,14 @@
+Peanut Butter gegen Jelly, heißt es im PeanutButterJelly Game.
+
+Das Spielziel der Spieler ist es, das PeanutButter- bzw. das Jelly-Glas des Kontrahenten auszuleeren. Dazu muss der Spieler das Glas des Gegenspielers berühren und mit gestohlener PeanutButter/Jelly wieder zu seinem eigenen Startpunkt flüchten.
+
+Diverse Power-Ups helfen den Spielern:
+	- Der Komet erhöht kurzzeitig die Laufgeschwindigkeit des Spielers.
+	- Die Weltkugel lässt einen Spieler ein Stück Mauer durchbrechen.
+	- Mit dem Ziegelstein kann ein neuer Mauerblock gebaut werden.
+	- Der Magnet nimmt den Gegenspieler einen Ziegelstein aus dessen Inventar weg.
+	- Graue Blöcke generieren noch mehr Items auf der Karte.
+
+Aber nicht nur Power-Ups befinden sich im Spiel. Löst ein Spieler die Eisfall aus, wird seine Bewegungsgeschwindigkeit vorübergehend verringert.
+
+Das Spiel ist mit stimmiger 8-Bit Musik und diversen Soundeffekten untermalt. In Kombination mit der passenden 2D-Grafik wird ein nostalgisches Spielgefühl vermittlet, welches an All-Time-Classics wie PacMan und co. erinnert.

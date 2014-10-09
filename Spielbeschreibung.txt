@@ -11,4 +11,4 @@ Diverse Power-Ups helfen den Spielern:
 
 Aber nicht nur Power-Ups befinden sich im Spiel. Löst ein Spieler die Eisfall aus, wird seine Bewegungsgeschwindigkeit vorübergehend verringert.
 
-Das Spiel ist mit stimmiger 8-Bit Musik und diversen Soundeffekten untermalt. In Kombination mit der passenden 2D-Grafik wird ein nostalgisches Spielgefühl vermittlet, welches an All-Time-Classics wie PacMan und co. erinnert.
+Das Spiel ist mit stimmiger 8-Bit Musik und diversen Soundeffekten untermalt. In Kombination mit der passenden 2D-Grafik wird ein nostalgisches Spielgefühl vermittelt, welches an All-Time-Classics wie PacMan und co. erinnert.
